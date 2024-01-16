@@ -25,5 +25,5 @@ jobs:
             - name: Run tests ✅
               run: npm test
 
-            # - name: Build project 🔨
-            #   run: npm run build --if-present
+            - name: Build project 🔨
+              run: npm run build --if-present
