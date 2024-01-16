@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/app.js",
+  "_moduleAliases": {
+    "@adapters": "./dist/adapters",
+    "@common": "./dist/common",
+    "@core": "./dist/core",
+    "@infra": "./dist/infrastructure"
+  },
   "scripts": {
-    "build": "npx tsc ./tsconfig.json",
+    "build": "npx tsc --project tsconfig.json",
     "clean": "rm -rf dist/",
-    "start": "rm -rf dist/ && tsc -p ./tsconfig.json && node -r dist/app.js",
+    "start": "rm -rf dist/ && tsc -p ./tsconfig.json && node dist/app.js",
     "dev": "NODE_ENV=development ts-node src/app.ts",
     "dev:watch": "NODE_ENV=development tsnd -r tsconfig-paths/register --respawn src/app.ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
@@ -20,6 +26,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "joi": "^17.11.0",
+    "module-alias": "^2.2.3",
     "path": "^0.12.7",
     "pg": "^8.11.3",
     "pino": "^8.17.2",
