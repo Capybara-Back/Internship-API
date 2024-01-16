@@ -8,6 +8,7 @@ FROM builder AS dev
 CMD ["npm", "run", "dev"]
 
 FROM builder AS production
+WORKDIR /app
 RUN npm ci --only-production
-COPY dist ./dist
+RUN npm run build
 CMD ["npm", "start"]
