@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+# ignore .git and .cache folders
+.git
+.cache
+*.md
+!README*.md
+README-secret.md
+# github related files
+.github/

@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "build": "npx tsc --project tsconfig.json",
+    "build": "tsc && tsc-alias",
     "clean": "rm -rf dist/",
-    "start": "rm -rf dist/ && tsc -p ./tsconfig.json && node dist/app.js",
+    "start": "npm run clean && npm run build && node dist/app.js",
     "dev": "NODE_ENV=development ts-node src/app.ts",
     "dev:watch": "NODE_ENV=development tsnd -r tsconfig-paths/register --respawn src/app.ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
@@ -41,6 +41,7 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.3"
   }
