@@ -1,0 +1,29 @@
+name: Tag Pull Request Commit
+
+on:
+    pull_request:
+        types:
+            - synchronize
+
+jobs:
+    tag:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Git
+              run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "Capybara"
+
+            - name: Get version from pull request title
+              id: version
+              run: echo "::set-output name=version::$(echo ${{ github.event.pull_request.title }} | grep -o -P '(\d+\.\d+\.\d+)')"
+
+            - name: Create tag
+              run: |
+                  echo "version=${{ steps.version.outputs.version }}"
+              #   git tag -a "${{ steps.version.outputs.version }}" -m "Tag for PR #${{ github.event.number }}"
+              #   git push origin "${{ steps.version.outputs.version }}"
