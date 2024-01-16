@@ -1,6 +1,6 @@
 name: Tag Pull Request Commit
 
-on: push
+on: [push, pull_request]
 
 jobs:
     tag:
@@ -17,10 +17,10 @@ jobs:
 
             - name: Get version from pull request title
               id: version
-              run: echo "::set-output name=version::$(echo ${{ github.event.pull_request.title }} | grep -o -P '(\d+\.\d+\.\d+)')"
+              run: echo "$(echo ${{ github.event.pull_request.title }} | grep -o -P '(\d+\.\d+\.\d+)')" >> "$COMMIT_VERSION"
 
             - name: Create tag
               run: |
-                  echo "version=${{ steps.version.outputs.version }}"
+                  echo "version=$COMMIT_VERSION"
               #   git tag -a "${{ steps.version.outputs.version }}" -m "Tag for PR #${{ github.event.number }}"
               #   git push origin "${{ steps.version.outputs.version }}"
