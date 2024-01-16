@@ -1,4 +1,5 @@
-import { ApplicantsRouter } from './applicants';
+// import InternshipRouter from './internships/internship.router';
+import InternshipRouter from './internships/internship.router';
 import RouterHandler from './router.abstract';
 
 export default class MainRouter extends RouterHandler {
@@ -8,6 +9,6 @@ export default class MainRouter extends RouterHandler {
     }
 
     private initRoutes(): void {
-        this._router.use('/applicants', new ApplicantsRouter().getRouter());
+        this._router.use('/internships', new InternshipRouter().getRouter());
     }
 }

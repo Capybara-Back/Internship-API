@@ -1,6 +1,7 @@
 import express, { Express } from 'express';
 import RouterHandler from './routers/router.abstract';
-import { AppDataSource } from '../database/orm/typeorm/typeorm';
+import errorHandler from './middlewares/error-handler';
+import { DatabaseClient } from '../database/orm';
 
 export default class ExpressApp {
     private _app: Express;
@@ -19,11 +20,13 @@ export default class ExpressApp {
 
     private initApp(): void {
         if (this._appInitialized === false) {
+            this.setAppSettings();
             this.setAppRouter();
+            this.setErrorHandlers();
 
-            console.log(process.env);
+            const databaseClient = DatabaseClient.getInstance();
 
-            AppDataSource.initialize().then(() => {
+            databaseClient.connect().then(() => {
                 this._appInitialized = true;
             });
         }
@@ -31,5 +34,14 @@ export default class ExpressApp {
 
     private setAppRouter(): void {
         this._app.use('', this._routerHandler.getRouter());
+    }
+
+    private setAppSettings(): void {
+        this._app.use(express.json());
+        this._app.use(express.urlencoded({ extended: true }));
+    }
+
+    private setErrorHandlers(): void {
+        this._app.use(errorHandler);
     }
 }

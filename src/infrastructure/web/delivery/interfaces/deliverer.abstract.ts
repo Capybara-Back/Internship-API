@@ -1,4 +1,4 @@
-import IHttpRequestModel from '../../../../adapters/controllers/interfaces/i-http-request.model';
+import IHttpRequestModel from '@adapters/controllers/interfaces/i-http-request.model';
 import { Request, Response, NextFunction } from 'express';
 
 export default abstract class Deliverer {
@@ -15,11 +15,6 @@ export default abstract class Deliverer {
     public abstract respond(): Promise<void>;
 
     protected handleError(err: any): void {
-        if (err.isFailure) {
-            const httpError = this.httpErrorFactory(err.getError());
-            this.next(httpError);
-            return;
-        }
         this.next(err);
     }
 
@@ -30,9 +25,5 @@ export default abstract class Deliverer {
             body: req.body,
             headers: req.headers
         };
-    }
-
-    private httpErrorFactory(unknownError: any) {
-        if (unknownError.statusCode) return unknownError;
     }
 }

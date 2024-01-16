@@ -1,20 +1,30 @@
 import { DataSource } from 'typeorm';
-import { Applicant } from './entities';
+import AcademicTutor from './entities/AcademicTutor';
+import Company from './entities/Company';
+import EnterpriseTutor from './entities/EnterpriseTutor';
+import Internship from './entities/Internship';
+import Student from './entities/Student';
+import User from './entities/User';
 
 const postgresConfig = {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
-    username: 'myusername',
-    password: 'mypassword',
+    username: 'capybara',
+    password: 'capybara',
     database: process.env.DB_NAME
 };
 
-export const AppDataSource = new DataSource({
+export const dataSource = new DataSource({
     ...postgresConfig,
     type: 'postgres',
-    synchronize: true,
     logging: false,
-    entities: [Applicant],
-    migrations: ['src/migrations/**/*{.ts}'],
-    subscribers: ['src/subscribers/**/*{.ts}']
+    entities: [
+        User,
+        AcademicTutor,
+        Company,
+        EnterpriseTutor,
+        Internship,
+        Student
+    ],
+    synchronize: true
 });

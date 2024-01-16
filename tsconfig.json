@@ -5,15 +5,16 @@
     "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    // "paths": {
-    //   "@adapters/*": ["./src/adapters/*"],
-    //   "@common/*": ["./src/common/*"],
-    //   "@core/*": ["./src/core/*"],
-    //   "@infra/*": ["./src/infrastructure/*"]
-    // },                  
+    "resolveJsonModule": true,
+    "paths": {
+      "@adapters/*": ["./adapters/*"],
+      "@common/*": ["./common/*"],
+      "@core/*": ["./core/*"],
+      "@infra/*": ["./infrastructure/*"]
+    },                  
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
 
     /* Type Checking */

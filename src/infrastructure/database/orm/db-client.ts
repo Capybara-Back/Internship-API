@@ -1,4 +1,4 @@
-import { SingletonWrapper } from '../../../common/errors/helpers';
+import { SingletonWrapper } from '../../../common/helpers';
 import DatabaseClientFactory from './db-client.factory';
 
 const databaseClientFactory = new DatabaseClientFactory();

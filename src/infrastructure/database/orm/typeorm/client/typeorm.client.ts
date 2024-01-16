@@ -1,5 +1,6 @@
+import logger from '../../../../../common/logger';
 import DatabaseClient from '../../interfaces/db-client.abstract';
-import { AppDataSource } from '../typeorm';
+import { dataSource } from '../typeorm';
 
 export default class TypeORMClient extends DatabaseClient {
     public constructor() {
@@ -9,17 +10,17 @@ export default class TypeORMClient extends DatabaseClient {
 
     public async connect(): Promise<void> {
         try {
-            await AppDataSource.initialize();
-
-            this._connection = AppDataSource;
+            await dataSource.initialize();
+            this._connection = dataSource;
         } catch (err) {
             this._connection = null;
-            //   logger.error({ err }, 'Unable to synchronize with database');
+            logger.error({ err }, 'Unable to connect with database');
         }
     }
 
     public async close(): Promise<null | void> {
-        //   if (!this._connection) return null;
-        //   logger.info('Database connection: Successfully closed');
+        if (!this._connection) return null;
+        await this._connection?.destroy();
+        logger.info('Database connection: Successfully closed');
     }
 }
