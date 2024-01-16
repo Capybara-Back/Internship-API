@@ -3,21 +3,21 @@ import IHttpRequestModel from '../interfaces/i-http-request.model';
 import IValidator from '../interfaces/i-validator';
 import AddInternshipUseCase from '@core/use-cases/internships/add-internship.use-case';
 import { IAddInternsipRequestModel } from '@core/interfaces/request-models/internship.request-model';
-import { EntityOperationDictionary } from '@core/use-cases/interfaces/i-entity-operation';
+import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 
 export default class AddInternsipController
     implements IController<IInternshipDto>
 {
     private validation: IValidator;
-    private repositoryByResource: EntityOperationDictionary;
+    private internshipRepository: IInternshipRepository;
 
     public constructor(
         validation: IValidator,
-        repositoryByResource: EntityOperationDictionary
+        internshipRepository: IInternshipRepository
     ) {
         this.validation = validation;
-        this.repositoryByResource = repositoryByResource;
+        this.internshipRepository = internshipRepository;
     }
 
     async processRequest(req: IHttpRequestModel): Promise<IInternshipDto> {
@@ -31,7 +31,7 @@ export default class AddInternsipController
         const useCaseRequestModel = requestValidated.getValue()!;
 
         const addInternshipUseCase = new AddInternshipUseCase(
-            this.repositoryByResource
+            this.internshipRepository
         );
         return await addInternshipUseCase.perform(useCaseRequestModel);
     }

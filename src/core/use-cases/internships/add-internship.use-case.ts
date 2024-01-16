@@ -1,20 +1,20 @@
 import logger from '@common/logger';
 import IUseCase from '@core/interfaces/i-use-case';
 import { IAddInternsipRequestModel } from '@core/interfaces/request-models/internship.request-model';
-import { EntityOperationDictionary } from '../interfaces/i-entity-operation';
 import Internship from '@core/entities/internship.entity';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
+import { IInternshipRepository } from '../interfaces/i-entity-operation';
 
 export default class AddInternshipUseCase
     implements IUseCase<IAddInternsipRequestModel, IInternshipDto>
 {
-    private repositoryByResource: EntityOperationDictionary;
+    private internshipRepository: IInternshipRepository;
     private dataMapper: IEntityMapper<Internship, IInternshipDto>;
 
-    public constructor(repositoryByResource: EntityOperationDictionary) {
-        this.repositoryByResource = repositoryByResource;
+    public constructor(internshipRepository: IInternshipRepository) {
+        this.internshipRepository = internshipRepository;
         this.dataMapper = new InternshipMapper();
     }
 
@@ -30,10 +30,7 @@ export default class AddInternshipUseCase
             title
         });
 
-        const savedEntity =
-            await this.repositoryByResource.internships.save(internship);
-        logger.debug(savedEntity, 'Saved entity');
-
+        const savedEntity = await this.internshipRepository.save(internship);
         return this.dataMapper.toDTO(savedEntity);
     }
 }

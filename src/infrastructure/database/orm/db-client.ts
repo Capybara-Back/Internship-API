@@ -1,10 +1,8 @@
 import { SingletonWrapper } from '../../../common/helpers';
-import DatabaseClientFactory from './db-client.factory';
+import TypeORMClient from './typeorm/client/typeorm.client';
 
-const databaseClientFactory = new DatabaseClientFactory();
-
-const databaseClient = databaseClientFactory.makeClient('POSTGRES');
-
-const singletonDatabaseClient = SingletonWrapper.makeSingleton(databaseClient);
+const singletonDatabaseClient = SingletonWrapper.makeSingleton(
+    new TypeORMClient()
+);
 
 export default singletonDatabaseClient;

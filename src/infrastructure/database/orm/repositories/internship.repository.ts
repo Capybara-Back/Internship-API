@@ -1,4 +1,4 @@
-import { IInternshipOperation } from '@core/use-cases/interfaces/i-entity-operation';
+import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
 import DatabaseRepository from '../repository.abstract';
 import Internship from '@core/entities/internship.entity';
 import InternshipDbEntity from '../typeorm/entities/Internship';
@@ -10,7 +10,7 @@ import AcademicTutor from '../typeorm/entities/AcademicTutor';
 
 export default class InternshipRepository
     extends DatabaseRepository
-    implements IInternshipOperation
+    implements IInternshipRepository
 {
     private repository!: Repository<InternshipDbEntity>;
     private _dataMapper: Pick<IEntityMapper<Internship, any>, 'toDomain'>;

@@ -2,21 +2,13 @@ import AddInternsipController from '@adapters/controllers/internships/add-intern
 import Deliverer from '../interfaces/deliverer.abstract';
 import { addInternshipValidator } from '@adapters/validators/use-cases/internship';
 import { SuccessResponse } from '@common/contracts';
-import { InternshipsRepositoryFactory } from '@infra/database/factories';
+import InternshipRepository from '@infra/database/orm/repositories/internship.repository';
 
 export default class AddInternshipDeliverer extends Deliverer {
     public async respond(): Promise<void> {
-        const internshipsRepository = new InternshipsRepositoryFactory().create(
-            'POSTGRES'
-        );
-
-        const repositories = {
-            internships: internshipsRepository
-        };
-
         const addInternshipController = new AddInternsipController(
             addInternshipValidator,
-            repositories
+            new InternshipRepository()
         );
 
         const mappedHttpRequest = this.mapHttpRequest(this.req);
