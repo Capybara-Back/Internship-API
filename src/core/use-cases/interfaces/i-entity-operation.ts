@@ -1,4 +1,4 @@
-import Applicant from 'src/core/entities/applicant.entity';
+import Internship from '@core/entities/internship.entity';
 
 interface IWrite<T> {
     save(entity: T): Promise<T>;
@@ -11,10 +11,6 @@ interface IRead<T> {
     findOne(id: string): Promise<T | null>;
 }
 
-export default interface IEntityOperation extends IWrite<any>, IRead<any> {}
-
-export type EntityOperationDictionary = Record<string, IEntityOperation>;
-
-export interface IApplicantOperation
-    extends IWrite<Applicant>,
-        IRead<Applicant> {}
+export interface IInternshipRepository
+    extends IWrite<Internship>,
+        IRead<Internship> {}

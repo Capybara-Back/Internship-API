@@ -7,6 +7,7 @@ export default class ValidationError extends Error {
     public constructor(message: string) {
         super(message);
         this.name = this.constructor.name;
-        this.code = 500;
+        this.reason = message;
+        this.code = 400;
     }
 }

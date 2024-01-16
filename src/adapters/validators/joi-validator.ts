@@ -16,7 +16,6 @@ export class JoiValidator implements IValidator {
             const value: T = await this.schema.validateAsync(payload, {
                 abortEarly: true
             });
-
             return Result.ok<T>(value);
         } catch (err: any) {
             const error: joiError = err;

@@ -1,6 +1,11 @@
+import 'module-alias/register';
+import path from 'path';
 import WebAppFactory from './infrastructure/web-app.factory';
 import dotenv from 'dotenv';
-dotenv.config();
+
+dotenv.config({
+    path: path.resolve(process.cwd(), process.env.ENV_FILE || '.env')
+});
 
 const expressApp = new WebAppFactory().getExpressApp().build();
 
