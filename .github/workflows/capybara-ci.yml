@@ -15,6 +15,10 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
+            - name: Setup environment
+              run: |
+                  EXPORT ENV_FILE='.env.example'
+
             - name: Install Dependencies 📦️
               run: npm install
 
