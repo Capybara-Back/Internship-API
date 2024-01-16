@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/app.js",
-  "_moduleAliases": {
-    "@adapters": "./dist/adapters",
-    "@common": "./dist/common",
-    "@core": "./dist/core",
-    "@infra": "./dist/infrastructure"
-  },
   "scripts": {
     "build": "npx tsc --project tsconfig.json",
     "clean": "rm -rf dist/",
