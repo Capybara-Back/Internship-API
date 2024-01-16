@@ -10,7 +10,9 @@
     "dev": "NODE_ENV=development ts-node src/app.ts",
     "dev:watch": "NODE_ENV=development tsnd -r tsconfig-paths/register --respawn src/app.ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "test": "jest --watchAll --collectCoverage"
+    "test": "jest --collectCoverage",
+    "test:dev": "jest --watchAll --collectCoverage"
+
   },
   "keywords": [],
   "author": "",
