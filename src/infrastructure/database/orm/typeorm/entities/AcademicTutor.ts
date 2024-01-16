@@ -1,5 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn
+} from 'typeorm';
 import Internship from './Internship';
+import User from './User';
 
 @Entity()
 export default class AcademicTutor {
@@ -8,6 +16,10 @@ export default class AcademicTutor {
 
     @Column('varchar')
     schoolEmail: string;
+
+    @OneToOne(() => User)
+    @JoinColumn()
+    user: User;
 
     @OneToMany(
         () => Internship,
