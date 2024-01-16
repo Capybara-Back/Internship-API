@@ -11,10 +11,6 @@ interface IRead<T> {
     findOne(id: string): Promise<T | null>;
 }
 
-export default interface IEntityOperation extends IWrite<any>, IRead<any> {}
-
-export type EntityOperationDictionary = Record<string, IEntityOperation>;
-
-export interface IInternshipOperation
+export interface IInternshipRepository
     extends IWrite<Internship>,
         IRead<Internship> {}
