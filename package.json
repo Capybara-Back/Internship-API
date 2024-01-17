@@ -11,7 +11,8 @@
     "dev:watch": "NODE_ENV=development tsnd -r tsconfig-paths/register --respawn src/app.ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "test": "jest --collectCoverage",
-    "test:dev": "jest --watchAll --collectCoverage"
+    "test:dev": "jest --watchAll --collectCoverage",
+    "lint": "npx eslint ."
   },
   "keywords": [],
   "author": "",
