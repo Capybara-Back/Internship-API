@@ -5,7 +5,6 @@ on: [push, pull_request]
 jobs:
     tag:
         runs-on: ubuntu-latest
-        if: contains(github.event.head_commit.message, '[NEW VERSION]')
         steps:
             - name: Checkout repository
               uses: actions/checkout@v2
@@ -25,7 +24,6 @@ jobs:
                   fi
                   NEW_TAG="${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
                   echo "Generated new tag: $NEW_TAG"
-                  echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
             # - name: Push Git Tag
             #   run: |
