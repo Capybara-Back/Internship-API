@@ -1,0 +1,88 @@
+name: Capybara CI
+
+on:
+    push:
+        branches:
+            - main
+    pull_request: {}
+
+env:
+    IMAGE_NAME: capybara_back
+
+jobs:
+    lint:
+        name: Check syntax with ESLint
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: ['18.x', '20.x', '21.x']
+        steps:
+            - uses: actions/checkout@v4
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Setup environment 🔧
+              run: |
+                  export ENV_FILE='.env.example'
+
+            - name: Install Dependencies 📦️
+              run: npm ci
+
+            - name: Run ESLint ✅
+              run: npm run lint
+
+    test:
+        name: Run unit tests
+        runs-on: ubuntu-latest
+        needs: [lint]
+        strategy:
+            matrix:
+                node-version: ['18.x', '20.x', '21.x']
+        steps:
+            - uses: actions/checkout@v4
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Setup environment 🔧
+              run: |
+                  export ENV_FILE='.env.example'
+
+            - name: Install Dependencies 📦️
+              run: npm ci
+
+            - name: Run tests ✅
+              run: npm test
+
+    deploy:
+        name: Deploy to GHCR
+        runs-on: ubuntu-latest
+        needs: [test]
+        permissions:
+            packages: write
+            contents: read
+        if: contains('refs/heads/main', github.ref)
+        steps:
+            - uses: actions/checkout@v4
+            - name: Build image 👷
+              run: docker build --target production . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+            - name: Log in to registry 🔐
+              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+            - name: Push image 🚀
+              run: |
+                  IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+                  IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+                  VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+                  [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+                  [ "$VERSION" == "main" ] && VERSION=latest
+                  echo IMAGE_ID=$IMAGE_ID
+                  echo VERSION=$VERSION
+                  docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+                  docker push $IMAGE_ID:$VERSION
