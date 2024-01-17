@@ -5,22 +5,31 @@ on: [push, pull_request]
 jobs:
     tag:
         runs-on: ubuntu-latest
-
+        if: contains(github.event.head_commit.message, '[NEW VERSION]')
         steps:
-            - name: Checkout code
+            - name: Checkout repository
               uses: actions/checkout@v2
+              with:
+                  fetch-depth: '0'
 
-            - name: Set up Git
+            - name: Generate Git Tag
+              id: generate_tag
               run: |
-                  git config --local user.email "action@github.com"
-                  git config --local user.name "Capybara"
+                  VERSION_PREFIX="v"
+                  VERSION_MAJOR_MINOR="1.0"
+                  VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
+                  if [ -z "$VERSION_PATCH" ]; then
+                    VERSION_PATCH=0
+                  else
+                    VERSION_PATCH=$((VERSION_PATCH + 1))
+                  fi
+                  NEW_TAG="${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
+                  echo "Generated new tag: $NEW_TAG"
+                  echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
-            - name: Get version from pull request title
-              id: version
-              run: echo "$(echo ${{ github.event.pull_request.title }} | grep -o -P '(\d+\.\d+\.\d+)')" >> "$COMMIT_VERSION"
-
-            - name: Create tag
+            - name: Push Git Tag
               run: |
-                  echo "version=$COMMIT_VERSION"
-              #   git tag -a "${{ steps.version.outputs.version }}" -m "Tag for PR #${{ github.event.number }}"
-              #   git push origin "${{ steps.version.outputs.version }}"
+                  git config user.name "GitHub Actions"
+                  git config user.email "github-actions@users.noreply.github.com"
+                  git tag $NEW_TAG
+                  git push origin $NEW_TAG
