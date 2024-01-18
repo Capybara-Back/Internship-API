@@ -24,7 +24,7 @@ const schema = z
         missionDescription: z.string(),
         startDate: z.string().datetime(),
         endDate: z.string().datetime(),
-        companyId: z.string().uuid().optional(),
+        companyId: z.string().optional(),
         company: CompanySchema,
         studentId: z.string().uuid(),
         academicTutorId: z.string().uuid().optional(),

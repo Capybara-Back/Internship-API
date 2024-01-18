@@ -1,5 +1,6 @@
 import { IAddAcademicTutorRequestModel } from './academic-tutor.request-model';
 import { IAddCompanyTutorRequestModel } from './company-tutor.request-model';
+import { IAddCompanyRequestModel } from './company.request-model';
 
 export interface IAddInternsipRequestModel {
     title: string;
@@ -7,8 +8,10 @@ export interface IAddInternsipRequestModel {
     startDate: Date;
     endDate: Date;
     studentId: string;
+    companyId: string;
+    company?: IAddCompanyRequestModel;
     academicTutorId: string;
-    academicTutor: IAddAcademicTutorRequestModel;
+    academicTutor?: IAddAcademicTutorRequestModel;
     companyTutorId: string;
-    companyTutor: IAddCompanyTutorRequestModel;
+    companyTutor?: IAddCompanyTutorRequestModel;
 }

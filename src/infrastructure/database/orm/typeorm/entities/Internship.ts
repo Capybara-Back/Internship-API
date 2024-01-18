@@ -1,6 +1,8 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import AcademicTutor from './AcademicTutor';
 import Student from './Student';
+import CompanyTutor from './CompanyTutor';
+import Company from './Company';
 
 @Entity()
 export default class Internship {
@@ -10,8 +12,14 @@ export default class Internship {
     @Column('varchar')
     title: string;
 
+    @Column('varchar')
+    missionDescription: string;
+
     @Column('date')
-    date: Date;
+    startDate: Date;
+
+    @Column('date')
+    endDate: Date;
 
     @ManyToOne(() => Student, (student) => student.internships)
     student: Student;
@@ -21,4 +29,10 @@ export default class Internship {
         (academicTutor) => academicTutor.internships
     )
     academicTutor: AcademicTutor;
+
+    @ManyToOne(() => CompanyTutor, (companyTutor) => companyTutor.internships)
+    companyTutor: CompanyTutor;
+
+    @ManyToOne(() => Company, (company) => company.internships)
+    company: Company;
 }
