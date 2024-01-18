@@ -7,6 +7,7 @@ export interface IInternshipDto {
     id: string;
     title: string;
     missionDescription: string;
+    status: string;
     startDate: Date;
     endDate: Date;
     academicTutor: IAcademicTutorDto;

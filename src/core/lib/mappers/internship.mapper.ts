@@ -20,6 +20,7 @@ export default class InternshipMapper
                 companyId: raw.company.id,
                 company: new Company(raw.company),
                 startDate: raw.startDate,
+                status: raw.status,
                 endDate: raw.endDate,
                 missionDescription: raw.missionDescription,
                 title: raw.title

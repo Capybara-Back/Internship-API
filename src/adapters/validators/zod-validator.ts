@@ -2,7 +2,6 @@ import { Result } from '../../core/lib/result';
 import IValidator from '../controllers/interfaces/i-validator';
 import { ValidationError } from '../../common/errors';
 import { AnyZodObject } from 'zod';
-import logger from '@common/logger';
 
 export class ZodValidator implements IValidator {
     private schema: AnyZodObject;
@@ -13,7 +12,6 @@ export class ZodValidator implements IValidator {
 
     public async validate<T>(payload: Record<string, any>): Promise<Result<T>> {
         const result = this.schema.safeParse(payload);
-        logger.debug(result);
         if (result.success) {
             return Result.ok<T>(result.data as T);
         } else {

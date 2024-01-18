@@ -4,6 +4,12 @@ import Student from './Student';
 import CompanyTutor from './CompanyTutor';
 import Company from './Company';
 
+enum InternshipStatus {
+    PENDING = 'pending',
+    VALIDATED = 'validated',
+    REJECTED = 'rejected'
+}
+
 @Entity()
 export default class Internship {
     @PrimaryGeneratedColumn('uuid')
@@ -20,6 +26,14 @@ export default class Internship {
 
     @Column('date')
     endDate: Date;
+
+    @Column({
+        type: 'enum',
+        enum: InternshipStatus,
+        nullable: true,
+        default: InternshipStatus.PENDING
+    })
+    status: InternshipStatus;
 
     @ManyToOne(() => Student, (student) => student.internships)
     student: Student;
