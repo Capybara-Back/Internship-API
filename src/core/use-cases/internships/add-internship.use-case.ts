@@ -1,4 +1,3 @@
-import logger from '@common/logger';
 import IUseCase from '@core/interfaces/i-use-case';
 import { IAddInternsipRequestModel } from '@core/interfaces/request-models/internship.request-model';
 import Internship from '@core/entities/internship.entity';
@@ -6,6 +5,7 @@ import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
 import { IInternshipRepository } from '../interfaces/i-entity-operation';
+import logger from '@common/logger';
 
 export default class AddInternshipUseCase
     implements IUseCase<IAddInternsipRequestModel, IInternshipDto>
@@ -21,12 +21,13 @@ export default class AddInternshipUseCase
     async perform(
         requestModel: IAddInternsipRequestModel
     ): Promise<IInternshipDto> {
-        const { studentId, date, title, academicTutorId } = requestModel;
+        logger.debug(requestModel, 'request model');
+        const { studentId, startDate, title, academicTutorId } = requestModel;
 
         const internship = Internship.create({
             academicTutorId,
             studentId,
-            date,
+            date: startDate,
             title
         });
 

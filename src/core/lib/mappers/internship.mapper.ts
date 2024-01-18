@@ -19,10 +19,10 @@ export default class InternshipMapper
         );
     }
 
-    public toDTO(internship: Internship): IInternshipDto {
+    public toDTO(internship: Internship): any {
         const data = internship.getProps();
         return {
-            internshipId: internship.id,
+            id: internship.id,
             ...data
         };
     }
