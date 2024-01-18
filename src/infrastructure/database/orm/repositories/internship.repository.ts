@@ -7,6 +7,8 @@ import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
 import Student from '../typeorm/entities/Student';
 import AcademicTutor from '../typeorm/entities/AcademicTutor';
+import CompanyTutor from '../typeorm/entities/CompanyTutor';
+import Company from '../typeorm/entities/Company';
 
 export default class InternshipRepository
     extends DatabaseRepository
@@ -22,11 +24,23 @@ export default class InternshipRepository
     }
 
     async save(entity: Internship): Promise<Internship> {
-        const entityToPersist = await this.repository.create(entity.toJSON());
+        const entityProps = entity.getProps();
+
+        const entityToPersist = await this.repository.create({
+            missionDescription: entityProps.missionDescription,
+            title: entityProps.title,
+            startDate: entityProps.startDate,
+            endDate: entityProps.endDate
+        });
+
         entityToPersist.student = new Student();
-        entityToPersist.student.id = entity.getProps().studentId;
+        entityToPersist.student.id = entityProps.studentId;
         entityToPersist.academicTutor = new AcademicTutor();
-        entityToPersist.academicTutor.id = entity.getProps().academicTutorId;
+        entityToPersist.academicTutor.id = entityProps.academicTutorId;
+        entityToPersist.companyTutor = new CompanyTutor();
+        entityToPersist.companyTutor.id = entityProps.companyTutorId;
+        entityToPersist.company = new Company();
+        entityToPersist.company.name = entityProps.companyId;
 
         const savedEntity = await this.repository.save(entityToPersist);
         return this._dataMapper.toDomain(savedEntity);

@@ -5,7 +5,9 @@ import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
 import { IInternshipRepository } from '../interfaces/i-entity-operation';
-import logger from '@common/logger';
+import AcademicTutor from '@core/entities/academic-tutor.entity';
+import CompanyTutor from '@core/entities/company-tutor.entity';
+import Company from '@core/entities/company.entity';
 
 export default class AddInternshipUseCase
     implements IUseCase<IAddInternsipRequestModel, IInternshipDto>
@@ -21,17 +23,64 @@ export default class AddInternshipUseCase
     async perform(
         requestModel: IAddInternsipRequestModel
     ): Promise<IInternshipDto> {
-        logger.debug(requestModel, 'request model');
-        const { studentId, startDate, title, academicTutorId } = requestModel;
-
-        const internship = Internship.create({
-            academicTutorId,
-            studentId,
-            date: startDate,
-            title
-        });
-
+        const internship = this.transformRequestModelIntoEntity(requestModel);
         const savedEntity = await this.internshipRepository.save(internship);
         return this.dataMapper.toDTO(savedEntity);
+    }
+
+    transformRequestModelIntoEntity(
+        requestModel: IAddInternsipRequestModel
+    ): Internship {
+        const {
+            studentId,
+            startDate,
+            endDate,
+            title,
+            missionDescription,
+            academicTutorId,
+            academicTutor,
+            companyTutorId,
+            companyTutor,
+            companyId,
+            company
+        } = requestModel;
+
+        return new Internship({
+            studentId,
+            startDate,
+            endDate,
+            title,
+            missionDescription,
+            academicTutorId,
+            companyTutorId,
+            companyId,
+            academicTutor:
+                academicTutor != null
+                    ? new AcademicTutor({
+                          firstName: academicTutor.firstname,
+                          lastName: academicTutor.lastName,
+                          phoneNumber: academicTutor.phoneNumber,
+                          mailAddress: academicTutor.mailAddress
+                      })
+                    : undefined,
+            companyTutor:
+                companyTutor != null
+                    ? new CompanyTutor({
+                          firstName: companyTutor.firstname,
+                          lastName: companyTutor.lastName,
+                          phoneNumber: companyTutor.phoneNumber,
+                          mailAddress: companyTutor.mailAddress
+                      })
+                    : undefined,
+            company:
+                company != null
+                    ? new Company({
+                          name: company.name,
+                          address: company.address,
+                          city: company.city,
+                          zipCode: company.zipCode
+                      })
+                    : undefined
+        });
     }
 }

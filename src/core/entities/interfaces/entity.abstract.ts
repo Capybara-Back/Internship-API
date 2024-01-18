@@ -5,15 +5,17 @@ const isEntity = (v: any): boolean => {
 };
 
 export default abstract class Entity<T> {
-    protected _id: string;
+    protected _id?: string;
     protected props: T;
 
-    public constructor(props: T, id: string | null) {
-        this._id = id ? id : uuidv4();
+    public constructor(props: T, id?: string | null) {
+        if (id) {
+            this._id = id;
+        }
         this.props = props;
     }
 
-    get id(): string {
+    get id(): string | undefined {
         return this._id;
     }
 

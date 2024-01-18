@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import AcademicTutor from './entities/AcademicTutor';
 import Company from './entities/Company';
-import EnterpriseTutor from './entities/EnterpriseTutor';
+import CompanyTutor from './entities/CompanyTutor';
 import Internship from './entities/Internship';
 import Student from './entities/Student';
 import User from './entities/User';
@@ -18,13 +18,6 @@ export const dataSource = new DataSource({
     ...postgresConfig,
     type: 'postgres',
     logging: false,
-    entities: [
-        User,
-        AcademicTutor,
-        Company,
-        EnterpriseTutor,
-        Internship,
-        Student
-    ],
+    entities: [User, AcademicTutor, Company, CompanyTutor, Internship, Student],
     synchronize: true
 });

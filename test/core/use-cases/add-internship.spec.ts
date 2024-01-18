@@ -25,21 +25,29 @@ describe('Add internship use case', () => {
 
     test('should return the saved internship', async () => {
         // Given
-        const currentDate = new Date();
+        const currentDate = new Date('December 17, 1994 03:24:00');
 
         const givenValue = {
             studentId: '7bc5f3f1-ed92-464f-9175-e4d264c5d102',
+            companyId: '7bc5f3f1-ed92-464f-9175-k4d264c5d198',
+            companyTutorId: '7bc5f3f1-ed92-464f-9175-e4d264c5d198',
             academicTutorId: '7bc5f3t5-ed92-464f-9175-e4d264c5d102',
+            startDate: currentDate,
+            endDate: new Date('December 17, 1995 03:24:00'),
             title: 'Test 1',
-            date: currentDate
+            missionDescription: 'description'
         };
 
-        const returnedValue = Internship.create(
+        const returnedValue = new Internship(
             {
                 studentId: '7bc5f3f1-ed92-464f-9175-e4d264c5d102',
+                companyId: '7bc5f3f1-ed92-464f-9175-k4d264c5d198',
+                companyTutorId: '7bc5f3f1-ed92-464f-9175-e4d264c5d198',
                 academicTutorId: '7bc5f3t5-ed92-464f-9175-e4d264c5d102',
-                date: currentDate,
-                title: 'Test 1'
+                startDate: currentDate,
+                endDate: new Date('December 17, 1995 03:24:00'),
+                title: 'Test 1',
+                missionDescription: 'description'
             },
             '7bc5f3f1-ed92-464f-9175-e4d264c5d104'
         );
@@ -54,9 +62,7 @@ describe('Add internship use case', () => {
         ).perform(givenValue);
 
         // Then
-        expect(result['internshipId']).not.toBeNull();
-        expect(result['internshipId']).toEqual(
-            '7bc5f3f1-ed92-464f-9175-e4d264c5d104'
-        );
+        expect(result['id']).not.toBeNull();
+        expect(result['id']).toEqual('7bc5f3f1-ed92-464f-9175-e4d264c5d104');
     });
 });
