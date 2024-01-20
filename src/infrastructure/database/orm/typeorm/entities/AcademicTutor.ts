@@ -17,9 +17,9 @@ export default class AcademicTutor {
     @Column('varchar')
     schoolEmail: string;
 
-    @OneToOne(() => User)
+    @OneToOne(() => User, { nullable: true })
     @JoinColumn()
-    user: User;
+    user?: User;
 
     @OneToMany(
         () => Internship,

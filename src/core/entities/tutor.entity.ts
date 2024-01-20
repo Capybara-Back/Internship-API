@@ -1,6 +1,6 @@
 import Entity from './interfaces/entity.abstract';
 
-interface ITutorProps {
+export interface ITutorProps {
     id?: string;
     firstName: string;
     lastName: string;

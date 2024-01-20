@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const isEntity = (v: any): boolean => {
     return v instanceof Entity;
 };

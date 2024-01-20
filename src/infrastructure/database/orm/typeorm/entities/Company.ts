@@ -1,4 +1,4 @@
-import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import CompanyTutor from './CompanyTutor';
 import Internship from './Internship';
 
@@ -6,6 +6,15 @@ import Internship from './Internship';
 export default class Company {
     @PrimaryColumn('varchar')
     name: string;
+
+    @Column('varchar')
+    address: string;
+
+    @Column('varchar')
+    city: string;
+
+    @Column('varchar')
+    zipCode: string;
 
     @OneToMany(() => CompanyTutor, (tutor) => tutor.company)
     tutors: CompanyTutor[];

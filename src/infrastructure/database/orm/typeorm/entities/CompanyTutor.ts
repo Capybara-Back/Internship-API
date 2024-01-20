@@ -19,9 +19,9 @@ export default class CompanyTutor {
     @Column('varchar')
     email: string;
 
-    @OneToOne(() => User)
+    @OneToOne(() => User, { nullable: true })
     @JoinColumn()
-    user: User;
+    user?: User;
 
     @ManyToOne(() => Company, (company) => company.tutors)
     company: Company;
