@@ -1,26 +1,21 @@
+import AcademicTutor from './academic-tutor.entity';
+import CompanyTutor from './company-tutor.entity';
+import Company from './company.entity';
 import Entity from './interfaces/entity.abstract';
 
 interface IInternshipProps {
     studentId: string;
-    academicTutorId: string;
-    date: Date;
+    startDate: Date;
+    endDate: Date;
     title: string;
+    status?: string;
+    missionDescription: string;
+    company?: Company;
+    companyId: string;
+    companyTutor?: CompanyTutor;
+    companyTutorId: string;
+    academicTutor?: AcademicTutor;
+    academicTutorId: string;
 }
 
-export default class Internship extends Entity<IInternshipProps> {
-    public static create(
-        internshipData: IInternshipProps,
-        id?: string
-    ): Internship {
-        const { studentId, date, title, academicTutorId } = internshipData;
-
-        const internship: IInternshipProps = {
-            studentId,
-            academicTutorId,
-            date,
-            title
-        };
-
-        return new Internship(internship, id || null);
-    }
-}
+export default class Internship extends Entity<IInternshipProps> {}

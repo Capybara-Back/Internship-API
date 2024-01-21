@@ -1,6 +1,14 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import AcademicTutor from './AcademicTutor';
 import Student from './Student';
+import CompanyTutor from './CompanyTutor';
+import Company from './Company';
+
+enum InternshipStatus {
+    PENDING = 'pending',
+    VALIDATED = 'validated',
+    REJECTED = 'rejected'
+}
 
 @Entity()
 export default class Internship {
@@ -10,8 +18,22 @@ export default class Internship {
     @Column('varchar')
     title: string;
 
+    @Column('varchar')
+    missionDescription: string;
+
     @Column('date')
-    date: Date;
+    startDate: Date;
+
+    @Column('date')
+    endDate: Date;
+
+    @Column({
+        type: 'enum',
+        enum: InternshipStatus,
+        nullable: true,
+        default: InternshipStatus.PENDING
+    })
+    status: InternshipStatus;
 
     @ManyToOne(() => Student, (student) => student.internships)
     student: Student;
@@ -21,4 +43,10 @@ export default class Internship {
         (academicTutor) => academicTutor.internships
     )
     academicTutor: AcademicTutor;
+
+    @ManyToOne(() => CompanyTutor, (companyTutor) => companyTutor.internships)
+    companyTutor: CompanyTutor;
+
+    @ManyToOne(() => Company, (company) => company.internships)
+    company: Company;
 }
