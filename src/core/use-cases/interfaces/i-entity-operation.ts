@@ -1,4 +1,5 @@
 import Internship from '@core/entities/internship.entity';
+import Document from '@core/entities/document.entity';
 
 interface IWrite<T> {
     save(entity: T): Promise<T>;
@@ -14,3 +15,7 @@ interface IRead<T> {
 export interface IInternshipRepository
     extends IWrite<Internship>,
         IRead<Internship> {}
+
+export interface IDocumentRepository
+    extends IWrite<Document>,
+        IRead<Document> {}
