@@ -6,7 +6,7 @@ import { IAddDocumentRequestModel } from '@core/interfaces/request-models/docume
 import { IDocumentRepository } from '@core/use-cases/interfaces/i-entity-operation';
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
 
-export default class AddInternsipController
+export default class AddInternshipController
     implements IController<IDocumentDto>
 {
     private validation: IValidator;

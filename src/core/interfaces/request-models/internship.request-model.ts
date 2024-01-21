@@ -2,7 +2,7 @@ import { IAddAcademicTutorRequestModel } from './academic-tutor.request-model';
 import { IAddCompanyTutorRequestModel } from './company-tutor.request-model';
 import { IAddCompanyRequestModel } from './company.request-model';
 
-export interface IAddInternsipRequestModel {
+export interface IAddInternshipRequestModel {
     title: string;
     missionDescription: string;
     startDate: Date;

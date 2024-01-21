@@ -2,11 +2,11 @@ import IController from '../interfaces/i-controller';
 import IHttpRequestModel from '../interfaces/i-http-request.model';
 import IValidator from '../interfaces/i-validator';
 import AddInternshipUseCase from '@core/use-cases/internships/add-internship.use-case';
-import { IAddInternsipRequestModel } from '@core/interfaces/request-models/internship.request-model';
+import { IAddInternshipRequestModel } from '@core/interfaces/request-models/internship.request-model';
 import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 
-export default class AddInternsipController
+export default class AddInternshipController
     implements IController<IInternshipDto>
 {
     private validation: IValidator;
@@ -22,7 +22,9 @@ export default class AddInternsipController
 
     async processRequest(req: IHttpRequestModel): Promise<IInternshipDto> {
         const requestValidated =
-            await this.validation.validate<IAddInternsipRequestModel>(req.body);
+            await this.validation.validate<IAddInternshipRequestModel>(
+                req.body
+            );
 
         if (requestValidated.isFailure) {
             throw requestValidated.getError();

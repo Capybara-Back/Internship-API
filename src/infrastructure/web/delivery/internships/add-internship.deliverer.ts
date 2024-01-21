@@ -1,4 +1,4 @@
-import AddInternsipController from '@adapters/controllers/internships/add-internship.controller';
+import AddInternshipController from '@adapters/controllers/internships/add-internship.controller';
 import Deliverer from '../interfaces/deliverer.abstract';
 import { addInternshipValidator } from '@adapters/validators/use-cases/internship';
 import { SuccessResponse } from '@common/contracts';
@@ -6,7 +6,7 @@ import InternshipRepository from '@infra/database/orm/repositories/internship.re
 
 export default class AddInternshipDeliverer extends Deliverer {
     public async respond(): Promise<void> {
-        const addInternshipController = new AddInternsipController(
+        const addInternshipController = new AddInternshipController(
             addInternshipValidator,
             new InternshipRepository()
         );

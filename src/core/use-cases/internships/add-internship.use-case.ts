@@ -1,5 +1,5 @@
 import IUseCase from '@core/interfaces/i-use-case';
-import { IAddInternsipRequestModel } from '@core/interfaces/request-models/internship.request-model';
+import { IAddInternshipRequestModel } from '@core/interfaces/request-models/internship.request-model';
 import Internship from '@core/entities/internship.entity';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
@@ -10,7 +10,7 @@ import CompanyTutor from '@core/entities/company-tutor.entity';
 import Company from '@core/entities/company.entity';
 
 export default class AddInternshipUseCase
-    implements IUseCase<IAddInternsipRequestModel, IInternshipDto>
+    implements IUseCase<IAddInternshipRequestModel, IInternshipDto>
 {
     private internshipRepository: IInternshipRepository;
     private dataMapper: IEntityMapper<Internship, IInternshipDto>;
@@ -21,7 +21,7 @@ export default class AddInternshipUseCase
     }
 
     async perform(
-        requestModel: IAddInternsipRequestModel
+        requestModel: IAddInternshipRequestModel
     ): Promise<IInternshipDto> {
         const internship = this.transformRequestModelIntoEntity(requestModel);
         const savedEntity = await this.internshipRepository.save(internship);
@@ -29,7 +29,7 @@ export default class AddInternshipUseCase
     }
 
     transformRequestModelIntoEntity(
-        requestModel: IAddInternsipRequestModel
+        requestModel: IAddInternshipRequestModel
     ): Internship {
         const {
             studentId,
