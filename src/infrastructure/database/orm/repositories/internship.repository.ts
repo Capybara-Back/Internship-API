@@ -70,8 +70,17 @@ export default class InternshipRepository
     }
 
     async findAll(): Promise<Internship[]> {
-        const results = await this.repository.find();
-        return results.map((entity) => this._dataMapper.toDomain(entity));
+        return (
+            await this.repository
+                .createQueryBuilder('internship')
+                .leftJoinAndSelect('internship.student', 'studentId')
+                .leftJoinAndSelect('internship.company', 'company')
+                .leftJoinAndSelect('internship.companyTutor', 'companyTutor')
+                .leftJoinAndSelect('companyTutor.user', 'companyTutorUser')
+                .leftJoinAndSelect('internship.academicTutor', 'academicTutor')
+                .leftJoinAndSelect('academicTutor.user', 'academicTutorUser')
+                .getMany()
+        ).map((entity) => this._dataMapper.toDomain(entity));
     }
 
     async findOne(id: string): Promise<Internship | null> {
