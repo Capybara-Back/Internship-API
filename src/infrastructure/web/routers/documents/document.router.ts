@@ -1,6 +1,9 @@
 import { AddDocumentDeliverer } from '../../../web/delivery/documents';
 import RouterHandler from '../router.abstract';
+import multer from 'multer';
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 export default class DocumentRouter extends RouterHandler {
     public constructor() {
         super();
@@ -8,6 +11,10 @@ export default class DocumentRouter extends RouterHandler {
     }
 
     private initRoutes(): void {
-        this._router.post('/', this.handleRequest(AddDocumentDeliverer));
+        this._router.post(
+            '/',
+            upload.single('file'),
+            this.handleRequest(AddDocumentDeliverer)
+        );
     }
 }

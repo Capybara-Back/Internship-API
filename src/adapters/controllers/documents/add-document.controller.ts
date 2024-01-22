@@ -4,6 +4,7 @@ import IValidator from '../interfaces/i-validator';
 import AddDocumentUseCase from '@core/use-cases/documents/add-document.use-case';
 import { IAddDocumentRequestModel } from '@core/interfaces/request-models/document.request-model';
 import { IDocumentRepository } from '@core/use-cases/interfaces/i-entity-operation';
+import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
 
 export default class AddInternshipController
@@ -11,13 +12,16 @@ export default class AddInternshipController
 {
     private validation: IValidator;
     private documentRepository: IDocumentRepository;
+    private internshipRepository: IInternshipRepository;
 
     public constructor(
         validation: IValidator,
-        documentRepository: IDocumentRepository
+        documentRepository: IDocumentRepository,
+        internshipRepository: IInternshipRepository
     ) {
         this.validation = validation;
         this.documentRepository = documentRepository;
+        this.internshipRepository = internshipRepository;
     }
 
     async processRequest(req: IHttpRequestModel): Promise<IDocumentDto> {
@@ -32,6 +36,7 @@ export default class AddInternshipController
 
         const addDocumentUseCase = new AddDocumentUseCase(
             this.documentRepository
+            this.internshipRepository
         );
         return await addDocumentUseCase.perform(useCaseRequestModel);
     }

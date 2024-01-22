@@ -2,7 +2,7 @@ export interface IAddDocumentRequestModel {
     id: string;
     documentName: string;
     documentPath: string;
-    leveOfConfidentiality: number;
+    levelOfConfidentiality: number;
     internshipId: string;
-    file: File;
+    file: Express.Multer.File;
 }
