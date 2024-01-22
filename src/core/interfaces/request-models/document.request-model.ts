@@ -1,7 +1,8 @@
 export interface IAddDocumentRequestModel {
     id: string;
+    documentName: string;
+    documentPath: string;
     leveOfConfidentiality: number;
-    name: string;
-    path: string;
-    internship: string;
+    internshipId: string;
+    file: File;
 }

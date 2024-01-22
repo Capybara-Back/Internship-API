@@ -5,9 +5,6 @@ import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
 import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
 import DocumentMapper from '@core/lib/mappers/document.mapper';
 import { IDocumentRepository } from '../interfaces/i-entity-operation';
-import AcademicTutor from '@core/entities/academic-tutor.entity';
-import CompanyTutor from '@core/entities/company-tutor.entity';
-import Company from '@core/entities/company.entity';
 
 export default class AddDocumentUseCase
     implements IUseCase<IAddDocumentRequestModel, IDocumentDto>
@@ -31,15 +28,14 @@ export default class AddDocumentUseCase
     transformRequestModelIntoEntity(
         requestModel: IAddDocumentRequestModel
     ): Document {
-        const { name, leveOfConfidentiality, file } = requestModel;
+        const { documentName, leveOfConfidentiality, file } = requestModel;
 
         return new Document({
             id,
-            name,
+            documentName,
+            documentPath,
             leveOfConfidentiality,
-            path,
-            missionDescription,
-            internship:
+            internshipId:
                 internship != null
                     ? new Internship({
                           // TODO

@@ -3,10 +3,11 @@ import Entity from './interfaces/entity.abstract';
 
 interface IDocumentProps {
     id: string;
+    documentName: string;
+    documentPath: string;
     leveOfConfidentiality: number;
-    name: string;
-    path: string;
-    internship: Internship;
+    internshipId: Internship;
+    file: File;
 }
 
 export default class Document extends Entity<IDocumentProps> {}

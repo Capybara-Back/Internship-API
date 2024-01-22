@@ -26,3 +26,5 @@ export interface ICompanyRepository extends IRepository<Company> {}
 export interface IAcademicTutorRepository extends IRepository<AcademicTutor> {}
 
 export interface ICompanyTutorRepository extends IRepository<CompanyTutor> {}
+
+export interface IDocumentRepository extends IRepository<Document> {}
