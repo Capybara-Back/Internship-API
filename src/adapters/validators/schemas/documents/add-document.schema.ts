@@ -2,18 +2,14 @@ import { z } from 'zod';
 
 const schema = z
     .object({
-        title: z.string()
+        documentName: z.string(),
+        levelOfConfidentiality: z.number(),
+        internshipId: z.string().uuid()
     })
-    .refine(
-        (schema: any) =>
-            Date.parse(schema.startDate) < Date.parse(schema.endDate),
-        {
-            message: 'Start date must be earlier than End date.'
-        }
-    )
+    .refine((schema: any) => schema.levelOfConfidentiality < 0, {
+        message: 'Level of confidentiality should be positive.'
+    })
     .superRefine((schema: any, ctx) => {
-        const hasCompanyId = Boolean(schema.companyId);
-
         return true;
     });
 
