@@ -7,10 +7,12 @@ export default class DocumentMapper
 {
     public toDomain(raw: { [key: string]: any }): Document {
         return new Document({
+            id: raw.id,
             documentName: raw.documentName,
             documentPath: raw.documentPath,
-            levelOfConfidentiality: raw.levelOfConfidentiality
-            internshipId: raw.internshipId
+            levelOfConfidentiality: raw.levelOfConfidentiality,
+            internshipId: raw.internshipId,
+            file: raw.file
         });
     }
 

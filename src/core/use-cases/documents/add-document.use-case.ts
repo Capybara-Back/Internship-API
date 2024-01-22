@@ -60,19 +60,19 @@ export default class AddDocumentUseCase
         return this.dataMapper.toDTO(savedEntity);
     }
 
-    /*transformRequestModelIntoEntity(
+    transformRequestModelIntoEntity(
         requestModel: IAddDocumentRequestModel
     ): Document {
         const { documentName, levelOfConfidentiality, internshipId, file } =
             requestModel;
 
         return new Document({
-            id,
+            id: 'todo',
             documentName,
-            documentPath,
+            documentPath: 'b',
             levelOfConfidentiality,
             internshipId,
             file
         });
-    }*/
+    }
 }

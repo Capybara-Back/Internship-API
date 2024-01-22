@@ -35,7 +35,7 @@ export default class AddInternshipController
         const useCaseRequestModel = requestValidated.getValue()!;
 
         const addDocumentUseCase = new AddDocumentUseCase(
-            this.documentRepository
+            this.documentRepository,
             this.internshipRepository
         );
         return await addDocumentUseCase.perform(useCaseRequestModel);
