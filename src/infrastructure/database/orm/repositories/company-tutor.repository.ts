@@ -12,7 +12,7 @@ export default class CompanyTutorRepository
     implements ICompanyTutorRepository
 {
     private repository!: Repository<CompanyTutorDbEntity>;
-    private _dataMapper: Pick<IEntityMapper<AcademicTutor, any>, 'toDomain'>;
+    private _dataMapper: Pick<IEntityMapper<CompanyTutor, any>, 'toDomain'>;
 
     public constructor() {
         super();

@@ -126,7 +126,7 @@ describe('Add internship use case', () => {
             firstName: 'John',
             lastName: 'Doe',
             phoneNumber: '064545545',
-            mailAddress: 'john.doe@gmail.com',
+            email: 'john.doe@gmail.com',
             schoolEmail: 'john.doe.school@gmail.com'
         });
 
@@ -150,7 +150,7 @@ describe('Add internship use case', () => {
             firstName: 'John',
             lastName: 'Doe',
             phoneNumber: '064545545',
-            mailAddress: 'john.doe@gmail.com'
+            email: 'john.doe@gmail.com'
         });
 
         mockCompanyTutorRepository.findOne = jest

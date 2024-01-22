@@ -169,8 +169,8 @@ export default class AddInternshipUseCase
                           firstName: academicTutor.firstName,
                           lastName: academicTutor.lastName,
                           phoneNumber: academicTutor.phoneNumber,
-                          mailAddress: academicTutor.mailAddress,
-                          schoolEmail: academicTutor.mailAddress
+                          email: academicTutor.email,
+                          schoolEmail: academicTutor.email
                       })
                     : undefined,
             companyTutor:
@@ -179,7 +179,7 @@ export default class AddInternshipUseCase
                           firstName: companyTutor.firstName,
                           lastName: companyTutor.lastName,
                           phoneNumber: companyTutor.phoneNumber,
-                          mailAddress: companyTutor.mailAddress
+                          email: companyTutor.email
                       })
                     : undefined,
             company:

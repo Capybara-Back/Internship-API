@@ -11,7 +11,8 @@ export default class AcademicTutorMapper
                 firstName: raw.firstName,
                 lastName: raw.lastName,
                 phoneNumber: raw.phoneNumber,
-                mailAddress: raw.mailAddress
+                email: raw.email,
+                schoolEmail: raw.email
             },
             raw.id
         );
