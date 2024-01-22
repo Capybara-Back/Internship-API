@@ -1,3 +1,8 @@
-import Tutor from './tutor.entity';
+import Entity from './interfaces/entity.abstract';
+import { ITutorProps } from './tutor.entity';
 
-export default class AcademicTutor extends Tutor {}
+interface IAcademicTutorProps extends ITutorProps {
+    schoolEmail: string;
+}
+
+export default class AcademicTutor extends Entity<IAcademicTutorProps> {}

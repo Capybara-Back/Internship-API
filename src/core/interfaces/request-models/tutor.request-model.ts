@@ -1,6 +1,6 @@
 export interface IAddTutorRequestModel {
-    firstname: string;
+    firstName: string;
     lastName: string;
     phoneNumber: string;
-    mailAddress: string;
+    email: string;
 }

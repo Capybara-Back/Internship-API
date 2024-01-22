@@ -3,7 +3,12 @@ import IHttpRequestModel from '../interfaces/i-http-request.model';
 import IValidator from '../interfaces/i-validator';
 import AddInternshipUseCase from '@core/use-cases/internships/add-internship.use-case';
 import { IAddInternshipRequestModel } from '@core/interfaces/request-models/internship.request-model';
-import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
+import {
+    IAcademicTutorRepository,
+    ICompanyRepository,
+    ICompanyTutorRepository,
+    IInternshipRepository
+} from '@core/use-cases/interfaces/i-entity-operation';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 
 export default class AddInternshipController
@@ -11,13 +16,22 @@ export default class AddInternshipController
 {
     private validation: IValidator;
     private internshipRepository: IInternshipRepository;
+    private companyRepository: ICompanyRepository;
+    private academicTutorRepository: IAcademicTutorRepository;
+    private companyTutorRepository: ICompanyTutorRepository;
 
     public constructor(
         validation: IValidator,
-        internshipRepository: IInternshipRepository
+        internshipRepository: IInternshipRepository,
+        companyRepository: ICompanyRepository,
+        academicTutorRepository: IAcademicTutorRepository,
+        companyTutorRepository: ICompanyTutorRepository
     ) {
         this.validation = validation;
         this.internshipRepository = internshipRepository;
+        this.companyRepository = companyRepository;
+        this.academicTutorRepository = academicTutorRepository;
+        this.companyTutorRepository = companyTutorRepository;
     }
 
     async processRequest(req: IHttpRequestModel): Promise<IInternshipDto> {
@@ -33,7 +47,10 @@ export default class AddInternshipController
         const useCaseRequestModel = requestValidated.getValue()!;
 
         const addInternshipUseCase = new AddInternshipUseCase(
-            this.internshipRepository
+            this.internshipRepository,
+            this.companyRepository,
+            this.academicTutorRepository,
+            this.companyTutorRepository
         );
         return await addInternshipUseCase.perform(useCaseRequestModel);
     }

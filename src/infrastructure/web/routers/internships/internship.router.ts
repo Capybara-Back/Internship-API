@@ -1,4 +1,4 @@
-import { AddInternshipDeliverer } from '@infra/web/delivery/internships';
+import { AddInternshipDeliverer } from '../../../web/delivery/internships';
 import RouterHandler from '../router.abstract';
 
 export default class InternshipRouter extends RouterHandler {
