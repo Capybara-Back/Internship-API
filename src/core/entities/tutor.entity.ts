@@ -5,7 +5,7 @@ export interface ITutorProps {
     firstName: string;
     lastName: string;
     phoneNumber: string;
-    mailAddress: string;
+    email: string;
 }
 
 export default abstract class Tutor extends Entity<ITutorProps> {}

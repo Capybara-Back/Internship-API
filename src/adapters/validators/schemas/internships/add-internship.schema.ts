@@ -14,7 +14,7 @@ const TutorSchema = z
         firstName: z.string(),
         lastName: z.string(),
         phoneNumber: z.string(),
-        mailAddress: z.string().email()
+        email: z.string().email()
     })
     .optional();
 
