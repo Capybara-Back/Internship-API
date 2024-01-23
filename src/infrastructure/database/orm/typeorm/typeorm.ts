@@ -8,7 +8,7 @@ import User from './entities/User';
 
 const postgresConfig = {
     host: process.env.DB_HOST,
-    port: 5433,
+    port: Number(process.env.DB_PORT),
     username: 'capybara',
     password: 'capybara',
     database: process.env.DB_NAME
