@@ -22,7 +22,7 @@ export default class AddInternshipDeliverer extends Deliverer {
         try {
             const content =
                 await addInternshipController.processRequest(mappedHttpRequest);
-            this.res.send(SuccessResponse.create(content)).status(200);
+            this.res.send(SuccessResponse.create(content)).status(201);
         } catch (err: any) {
             this.handleError(err);
         }
