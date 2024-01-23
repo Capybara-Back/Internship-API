@@ -19,6 +19,15 @@ export default class CompanyTutor {
     @Column('varchar')
     email: string;
 
+    @Column('varchar')
+    firstName: string;
+
+    @Column('varchar')
+    lastName: string;
+
+    @Column('varchar')
+    phoneNumber: string;
+
     @OneToOne(() => User, { nullable: true })
     @JoinColumn()
     user?: User;

@@ -11,7 +11,8 @@ export default class CompanyTutorMapper
                 firstName: raw.firstName,
                 lastName: raw.lastName,
                 phoneNumber: raw.phoneNumber,
-                email: raw.email
+                email: raw.email,
+                companyName: raw.company.name
             },
             raw.id
         );
