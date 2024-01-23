@@ -9,8 +9,8 @@ INSERT INTO public.company(
 	name, address, city, "zipCode")
 	VALUES ('Dassault Systèmes', '12 rue de la liberté', 'Vélizy-Villacoublay', '78560');
 INSERT INTO public.company_tutor(
-	id, email, "userId", "companyName")
-	VALUES ('42ab37be-af42-44da-9dd6-1c09aa6c473a', 'john.johonson@gmail.com.invalid', null, 'Dassault Systèmes');
+	id, email, "userId", "companyName", "firstName", "lastName", "phoneNumber")
+	VALUES ('42ab37be-af42-44da-9dd6-1c09aa6c473a', 'john.johonson@gmail.com.invalid', null, 'Dassault Systèmes', 'John', 'Johonson', '0123456789');
 INSERT INTO public.academic_tutor(
 	id, "schoolEmail", "userId")
 	VALUES ('8ecc03fe-0200-4a36-9b29-981a5c69f64d', 'jean-jacques.augustin@efrei.net', null);              
