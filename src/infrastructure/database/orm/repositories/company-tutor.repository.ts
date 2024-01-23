@@ -55,7 +55,9 @@ export default class CompanyTutorRepository
     }
 
     async findAll(): Promise<CompanyTutor[]> {
-        const results = await this.repository.find();
+        const results = await this.repository.find({
+            relations: { user: true, company: true }
+        });
         return results.map((entity) => this._dataMapper.toDomain(entity));
     }
 
