@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn
+} from 'typeorm';
 import AcademicTutor from './AcademicTutor';
 import Student from './Student';
 import CompanyTutor from './CompanyTutor';
@@ -49,4 +55,7 @@ export default class Internship {
 
     @ManyToOne(() => Company, (company) => company.internships)
     company: Company;
+
+    @OneToMany(() => Internship, (internship) => internship.student)
+    documents: Document[];
 }
