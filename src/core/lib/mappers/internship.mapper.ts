@@ -10,8 +10,8 @@ export default class InternshipMapper
     public constructor() {}
 
     public toDomain(raw: { [key: string]: any }): Internship {
-        delete raw.academicTutor.user.password;
-        delete raw.companyTutor.user.password;
+        delete raw?.academicTutor?.user?.password;
+        delete raw?.companyTutor?.user?.password;
         return new Internship(
             {
                 studentId: raw.student.id,
