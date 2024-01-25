@@ -12,11 +12,11 @@ export default class Document {
     @Column('varchar')
     documentPath: string;
 
-    @Column('number')
+    @Column('integer')
     levelOfConfidentiality: number;
 
     @Column('varchar')
-    internship_id: string;
+    internshipId: string;
 
     @ManyToOne(() => Internship, (internship) => internship.documents)
     internship: Internship;
