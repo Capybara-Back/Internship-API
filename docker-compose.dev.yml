@@ -1,17 +1,17 @@
-version: "3.8"
+version: "3.9"
 services:
   db:
     image: postgres
     container_name: capybara_db
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: capybara
       POSTGRES_PASSWORD: capybara
     volumes:
       - capybara_pg:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/db/init.sql
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4_container

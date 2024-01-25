@@ -6,11 +6,18 @@ import Internship from './entities/Internship';
 import Student from './entities/Student';
 import User from './entities/User';
 
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({
+    path: path.resolve(process.cwd(), process.env.ENV_FILE || '.env')
+});
+
 const postgresConfig = {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
-    username: 'capybara',
-    password: 'capybara',
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 };
 
