@@ -9,10 +9,12 @@ import {
     IInternshipRepository
 } from '../interfaces/i-entity-operation';
 
-import AWS from 'aws-sdk';
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+const client = new S3Client({
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ''
+    }
 });
 
 export default class AddDocumentUseCase
@@ -47,8 +49,16 @@ export default class AddDocumentUseCase
             ContentType: file[0].mimetype
         };
 
+        const command = new PutObjectCommand({
+            Bucket: process.env.AWS_S3_BUCKET_NAME || '',
+            Key: file[0].originalname,
+            Body: file[0].buffer,
+            ContentType: file[0].mimetype
+        });
+
         try {
-            await s3.upload(params).promise();
+            const response = await client.send(command);
+            console.log(response);
             //res.status(200).send('File uploaded to S3 successfully!');
         } catch (error) {
             console.error(error);
