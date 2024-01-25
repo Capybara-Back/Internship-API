@@ -42,9 +42,9 @@ export default class AddDocumentUseCase
 
         const params = {
             Bucket: process.env.AWS_S3_BUCKET_NAME || '',
-            Key: file.originalname,
-            Body: file.buffer,
-            ContentType: file.mimetype
+            Key: file[0].originalname,
+            Body: file[0].buffer,
+            ContentType: file[0].mimetype
         };
 
         try {

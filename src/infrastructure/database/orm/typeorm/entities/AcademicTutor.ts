@@ -15,6 +15,18 @@ export default class AcademicTutor {
     id: string;
 
     @Column('varchar')
+    firstName: string;
+
+    @Column('varchar')
+    lastName: string;
+
+    @Column('varchar')
+    phoneNumber: string;
+
+    @Column('varchar')
+    email: string;
+
+    @Column('varchar')
     schoolEmail: string;
 
     @OneToOne(() => User, { nullable: true })
