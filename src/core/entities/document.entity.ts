@@ -7,7 +7,7 @@ interface IDocumentProps {
     documentPath: string;
     levelOfConfidentiality: number;
     internshipId: string;
-    file: Express.Multer.File;
+    file: Express.Multer.File[];
 }
 
-export default class Document extends Entity<IDocumentProps> {}
+export default class Document extends Entity<IDocumentProps> { }

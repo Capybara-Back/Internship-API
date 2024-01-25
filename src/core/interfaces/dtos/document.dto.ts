@@ -9,5 +9,5 @@ export interface IDocumentDto {
     documentPath: string;
     levelOfConfidentiality: number;
     internshipId: string;
-    file: Express.Multer.File;
+    file: Express.Multer.File[];
 }

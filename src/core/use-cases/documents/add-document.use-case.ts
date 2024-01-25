@@ -38,7 +38,7 @@ export default class AddDocumentUseCase
         const savedEntity = await this.documentRepository.save(document);
 
         // BEGIN S3 UPLOAD
-        const file = requestModel.file as Express.Multer.File;
+        const file = requestModel.file as Express.Multer.File[];
 
         const params = {
             Bucket: process.env.AWS_S3_BUCKET_NAME || '',
