@@ -8,6 +8,7 @@ export default class AcademicTutorMapper
     public toDomain(raw: { [key: string]: any }): AcademicTutor {
         return new AcademicTutor(
             {
+                id: raw.id,
                 firstName: raw.firstName,
                 lastName: raw.lastName,
                 phoneNumber: raw.phoneNumber,
