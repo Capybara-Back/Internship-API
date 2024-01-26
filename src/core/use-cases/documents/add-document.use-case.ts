@@ -2,7 +2,7 @@ import IUseCase from '@core/interfaces/i-use-case';
 import { IAddDocumentRequestModel } from '@core/interfaces/request-models/document.request-model';
 import Document from '@core/entities/document.entity';
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
-import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import DocumentMapper from '@core/lib/mappers/document.mapper';
 import {
     IDocumentRepository,

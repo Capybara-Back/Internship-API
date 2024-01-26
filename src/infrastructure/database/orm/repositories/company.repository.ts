@@ -3,7 +3,7 @@ import DatabaseRepository from '../repository.abstract';
 import Company from '@core/entities/company.entity';
 import CompanyDbEntity from '../typeorm/entities/Company';
 import { Repository } from 'typeorm';
-import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import CompanyMapper from '@core/lib/mappers/company.mapper';
 import logger from '@common/logger';
 
@@ -21,11 +21,9 @@ export default class CompanyRepository
     }
 
     async save(entity: Company): Promise<Company> {
-        logger.debug(entity, 'Entity to be persisted');
         const entityToPersist = await this.repository.create(entity.toJSON());
 
         const savedEntity = await this.repository.save(entityToPersist);
-        logger.debug(savedEntity, 'Saved entity');
         return this._dataMapper.toDomain(savedEntity);
     }
 

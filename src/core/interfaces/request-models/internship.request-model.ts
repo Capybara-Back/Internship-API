@@ -8,10 +8,10 @@ export interface IAddInternshipRequestModel {
     startDate: Date;
     endDate: Date;
     studentId: string;
-    companyId: string;
+    companyId?: string;
     company?: IAddCompanyRequestModel;
-    academicTutorId: string;
+    academicTutorId?: string;
     academicTutor?: IAddAcademicTutorRequestModel;
-    companyTutorId: string;
+    companyTutorId?: string;
     companyTutor?: IAddCompanyTutorRequestModel;
 }

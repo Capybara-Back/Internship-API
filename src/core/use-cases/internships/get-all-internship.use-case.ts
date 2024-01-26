@@ -1,7 +1,7 @@
 import { IInternshipDto } from '../../interfaces/dtos/internship.dto';
 import IUseCase from '../../interfaces/i-use-case';
 import { IInternshipRepository } from '../interfaces/i-entity-operation';
-import IEntityMapper from '../../lib/mappers/i-entity-mapper';
+import IEntityMapper from '../../lib/mappers/interfaces/i-entity-mapper';
 import Internship from '../../entities/internship.entity';
 import InternshipMapper from '../../lib/mappers/internship.mapper';
 

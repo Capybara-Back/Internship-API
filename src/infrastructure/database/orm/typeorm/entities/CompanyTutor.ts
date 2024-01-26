@@ -40,4 +40,8 @@ export default class CompanyTutor {
         (internship: Internship) => internship.companyTutor
     )
     internships: Internship[];
+
+    public constructor(id: string) {
+        this.id = id;
+    }
 }

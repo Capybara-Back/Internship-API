@@ -38,4 +38,8 @@ export default class AcademicTutor {
         (internship: Internship) => internship.academicTutor
     )
     internships: Internship[];
+
+    public constructor(id: string) {
+        this.id = id;
+    }
 }
