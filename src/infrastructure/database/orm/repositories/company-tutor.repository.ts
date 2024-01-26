@@ -27,7 +27,6 @@ export default class CompanyTutorRepository
         const entityToPersist = await this.repository.create(entity.toJSON());
         entityToPersist.company = new CompanyDbEntity(entity.getCompanyName()!);
         const savedEntity = await this.repository.save(entityToPersist);
-        logger.info(savedEntity);
         return this._dataMapper.toDomain(savedEntity);
     }
 
