@@ -14,7 +14,6 @@ import AcademicTutor from '@core/entities/academic-tutor.entity';
 import CompanyTutor from '@core/entities/company-tutor.entity';
 import Company from '@core/entities/company.entity';
 import { ValueNotFoundError } from '@common/errors';
-import logger from '@common/logger';
 
 export default class AddInternshipUseCase
     implements IUseCase<IAddInternshipRequestModel, IInternshipDto>
@@ -133,8 +132,6 @@ export default class AddInternshipUseCase
             return foundCompanyTutor;
         } else if(companyTutor != null) {
             companyTutor.setCompanyName(companyId!);
-            console.log('Company tutor', companyTutor);
-            
             return await this.companyTutorRepository.save(
                 companyTutor
             );

@@ -37,10 +37,7 @@ export default class InternshipMapper
             missionDescription: raw.missionDescription,
         }, raw.id);
 
-        logger.debug(raw);
-
         return internship;
-
     }
 
     public toDomainWithRelation(raw: { [key: string]: any; }): Internship {

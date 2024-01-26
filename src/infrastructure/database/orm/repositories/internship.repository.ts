@@ -39,14 +39,8 @@ export default class InternshipRepository
             company: new Company(entityProps.company?.getProps().name!)
 
         });
-
-        try {
-            const savedEntity = await this.repository.save(entityToPersist);
-            return this._dataMapper.toDomain(savedEntity);
-        } catch (error) {
-            logger.error(error);
-            throw error;
-        }
+        const savedEntity = await this.repository.save(entityToPersist);
+        return this._dataMapper.toDomain(savedEntity);
     }
 
     async update(entity: Internship, id: string): Promise<Internship | null> {
