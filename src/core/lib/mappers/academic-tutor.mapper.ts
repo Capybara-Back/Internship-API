@@ -9,6 +9,7 @@ export default class AcademicTutorMapper
         
         return new AcademicTutor(
             {
+                id: raw.id,
                 firstName: raw.firstName,
                 lastName: raw.lastName,
                 phoneNumber: raw.phoneNumber,
