@@ -1,16 +1,16 @@
 import Company from '@core/entities/company.entity';
 import { ICompanyDto } from '@core/interfaces/dtos/company.dto';
-import IEntityMapper from './i-entity-mapper';
+import EntityMapper from './entity.mapper';
 
 export default class CompanyMapper
-    implements IEntityMapper<Company, ICompanyDto>
+    extends EntityMapper<Company, ICompanyDto>
 {
     public toDomain(raw: { [key: string]: any }): Company {
         return new Company({
             name: raw.name,
             address: raw.address,
             city: raw.city,
-            zipCode: raw.zipCode
+            zipCode: raw.zipCode,
         });
     }
 

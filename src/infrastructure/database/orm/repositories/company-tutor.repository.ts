@@ -2,10 +2,13 @@ import { ICompanyTutorRepository } from '@core/use-cases/interfaces/i-entity-ope
 import DatabaseRepository from '../repository.abstract';
 import CompanyTutor from '@core/entities/company-tutor.entity';
 import CompanyTutorDbEntity from '../typeorm/entities/CompanyTutor';
+import CompanyDbEntity from '../typeorm/entities/Company';
 import AcademicTutor from '@core/entities/academic-tutor.entity';
-import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import { Repository } from 'typeorm';
 import CompanyTutorMapper from '@core/lib/mappers/company-tutor.mapper';
+import logger from '@common/logger';
+import Company from '@core/entities/company.entity';
 
 export default class CompanyTutorRepository
     extends DatabaseRepository
@@ -22,6 +25,7 @@ export default class CompanyTutorRepository
 
     async save(entity: CompanyTutor): Promise<CompanyTutor> {
         const entityToPersist = await this.repository.create(entity.toJSON());
+        entityToPersist.company = new CompanyDbEntity(entity.getCompanyName()!);
         const savedEntity = await this.repository.save(entityToPersist);
         return this._dataMapper.toDomain(savedEntity);
     }

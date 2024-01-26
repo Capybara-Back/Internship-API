@@ -3,7 +3,7 @@ import DatabaseRepository from '../repository.abstract';
 import Document from '@core/entities/document.entity';
 import DocumentDbEntity from '../typeorm/entities/Document';
 import { Repository } from 'typeorm';
-import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import DocumentMapper from '@core/lib/mappers/document.mapper';
 import Internship from '../typeorm/entities/Internship';
 

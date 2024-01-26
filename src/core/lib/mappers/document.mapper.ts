@@ -1,9 +1,9 @@
 import Document from '@core/entities/document.entity';
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
-import IEntityMapper from './i-entity-mapper';
+import EntityMapper from './entity.mapper';
 
 export default class DocumentMapper
-    implements IEntityMapper<Document, IDocumentDto>
+    extends EntityMapper<Document, IDocumentDto>
 {
     public toDomain(raw: { [key: string]: any }): Document {
         return new Document({

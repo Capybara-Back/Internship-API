@@ -19,4 +19,8 @@ export default class Student {
 
     @OneToMany(() => Internship, (internship) => internship.student)
     internships: Internship[];
+
+    public constructor(id: string) {
+        this.id = id;
+    }
 }
