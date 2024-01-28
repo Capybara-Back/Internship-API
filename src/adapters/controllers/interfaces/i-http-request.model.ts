@@ -18,4 +18,5 @@ export default interface IHttpRequestModel {
     params: ParamsDictionary;
     body: any;
     headers: IncomingHttpHeaders;
+    files?: Express.Multer.File[];
 }
