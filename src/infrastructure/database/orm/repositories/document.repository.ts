@@ -23,16 +23,22 @@ export default class DocumentRepository
     async save(entity: Document): Promise<Document> {
         const entityProps = entity.getProps();
 
-        const entityToPersist = await this.repository.create({
-            documentName: entityProps.documentName,
-            documentPath: entityProps.documentPath,
-            levelOfConfidentiality: entityProps.levelOfConfidentiality
-        });
+        const entityToPersist = await this.repository.create(entityProps);
+        entityToPersist.internship = new Internship(entityProps.internshipId);
 
-        entityToPersist.internship = new Internship();
-        entityToPersist.internship.id = entityProps.internshipId;
         const savedEntity = await this.repository.save(entityToPersist);
         return this._dataMapper.toDomain(savedEntity);
+    }
+
+    async insertMany(entities: Document[]): Promise<Document[]>{
+        const entitiesToPersist = entities.map((entity) => {
+            const entityProps = entity.getProps();
+            const entityToPersist = this.repository.create(entityProps);
+            entityToPersist.internship = new Internship(entityProps.internshipId);
+            return entityToPersist;
+        });
+        const savedEntities = await this.repository.save(entitiesToPersist);
+        return savedEntities.map((entity) => this._dataMapper.toDomain(entity));
     }
 
     async update(entity: Document, id: string): Promise<Document | null> {

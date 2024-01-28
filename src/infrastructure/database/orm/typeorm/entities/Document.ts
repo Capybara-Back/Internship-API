@@ -7,16 +7,13 @@ export default class Document {
     id: string;
 
     @Column('varchar')
-    documentName: string;
+    name: string;
 
     @Column('varchar')
-    documentPath: string;
+    path: string;
 
     @Column('integer')
     levelOfConfidentiality: number;
-
-    @Column('varchar')
-    internshipId: string;
 
     @ManyToOne(() => Internship, (internship) => internship.documents)
     internship: Internship;

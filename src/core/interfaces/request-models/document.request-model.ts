@@ -1,8 +1,16 @@
-export interface IAddDocumentRequestModel {
-    id: string;
-    documentName: string;
-    documentPath: string;
+import { DocumentFile } from "@core/lib/services/i-upload-documents.service";
+
+export interface IAddDocumentMetadata {
+    filename: string;
     levelOfConfidentiality: number;
+}
+
+export interface IAddDocumentFormData {
+    metadata: IAddDocumentMetadata[];
     internshipId: string;
-    file: Express.Multer.File[];
+    documents: DocumentFile[];
+}
+
+export interface IAddDocumentRequestModel {
+    data: string
 }

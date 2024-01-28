@@ -23,7 +23,8 @@ export default abstract class Deliverer {
             query: req.query,
             params: req.params,
             body: req.body,
-            headers: req.headers
+            headers: req.headers,
+            files: (req.files as Express.Multer.File[]) || undefined,
         };
     }
 }

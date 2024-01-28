@@ -3,14 +3,14 @@ import Deliverer from '../interfaces/deliverer.abstract';
 import { addDocumentValidator } from '@adapters/validators/use-cases/document';
 import { SuccessResponse } from '@common/contracts';
 import DocumentRepository from '../../../database/orm/repositories/document.repository';
-import InternshipRepository from '../../../database/orm/repositories/internship.repository';
+import S3UploadDocumentsService from '@infra/external/s3-upload-documents.service';
 
 export default class AddDocumentDeliverer extends Deliverer {
     public async respond(): Promise<void> {
         const addDocumentController = new AddDocumentController(
             addDocumentValidator,
             new DocumentRepository(),
-            new InternshipRepository()
+            new S3UploadDocumentsService()
         );
 
         const mappedHttpRequest = this.mapHttpRequest(this.req);

@@ -9,6 +9,7 @@ import AcademicTutor from './AcademicTutor';
 import Student from './Student';
 import CompanyTutor from './CompanyTutor';
 import Company from './Company';
+import Document from './Document';
 
 enum InternshipStatus {
     PENDING = 'pending',
@@ -56,6 +57,10 @@ export default class Internship {
     @ManyToOne(() => Company, (company) => company.internships)
     company: Company;
 
-    @OneToMany(() => Internship, (internship) => internship.student)
+    @OneToMany(() => Document, (document) => document.internship)
     documents: Document[];
+
+    public constructor(id: string) {
+        this.id = id;
+    }
 }
