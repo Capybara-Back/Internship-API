@@ -1,16 +1,8 @@
 import { z } from 'zod';
+import { zfd } from 'zod-form-data';
 
-const schema = z
-    .object({
-        documentName: z.string(),
-        levelOfConfidentiality: z.number(),
-        internshipId: z.string().uuid()
-    })
-    .refine((schema: any) => schema.levelOfConfidentiality < 0, {
-        message: 'Level of confidentiality should be positive.'
-    })
-    .superRefine((schema: any, ctx) => {
-        return true;
-    });
+const schema = zfd.formData({
+    data: z.any()
+});
 
 export default schema;
