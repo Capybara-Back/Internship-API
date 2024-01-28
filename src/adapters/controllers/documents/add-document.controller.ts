@@ -2,29 +2,33 @@ import IController from '../interfaces/i-controller';
 import IHttpRequestModel from '../interfaces/i-http-request.model';
 import IValidator from '../interfaces/i-validator';
 import AddDocumentUseCase from '@core/use-cases/documents/add-document.use-case';
-import { IAddDocumentRequestModel } from '@core/interfaces/request-models/document.request-model';
+import { IAddDocumentFormData, IAddDocumentRequestModel } from '@core/interfaces/request-models/document.request-model';
 import { IDocumentRepository } from '@core/use-cases/interfaces/i-entity-operation';
-import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
+import { IUploadDocumentsService } from '@core/lib/services/i-upload-documents.service';
+import { ValidationError } from '@common/errors';
 
 export default class AddInternshipController
-    implements IController<IDocumentDto>
+    implements IController<IDocumentDto[]>
 {
     private validation: IValidator;
     private documentRepository: IDocumentRepository;
-    private internshipRepository: IInternshipRepository;
+    private uploadDocumentsService: IUploadDocumentsService;
 
     public constructor(
         validation: IValidator,
         documentRepository: IDocumentRepository,
-        internshipRepository: IInternshipRepository
+        uploadDocumentsService: IUploadDocumentsService
     ) {
         this.validation = validation;
         this.documentRepository = documentRepository;
-        this.internshipRepository = internshipRepository;
+        this.uploadDocumentsService = uploadDocumentsService;
     }
 
-    async processRequest(req: IHttpRequestModel): Promise<IDocumentDto> {
+    async processRequest(req: IHttpRequestModel): Promise<IDocumentDto[]> {
+        if(req.params.internshipId === undefined) {
+            throw new ValidationError('Internship id is required');
+        }
         const requestValidated =
             await this.validation.validate<IAddDocumentRequestModel>(req.body);
 
@@ -32,11 +36,22 @@ export default class AddInternshipController
             throw requestValidated.getError();
         }
 
-        const useCaseRequestModel = requestValidated.getValue()!;
+        const useCaseRequestModel = JSON.parse(requestValidated.getValue()!.data) as IAddDocumentFormData;
+        useCaseRequestModel.internshipId = req.params.internshipId;
+
+        if (!req.files) {
+            throw new ValidationError('No files given to upload');
+        }
+        
+        useCaseRequestModel.documents = req.files.map((file) => ({
+            name: file.filename,
+            type: file.mimetype,
+            path: file.path
+        }));
 
         const addDocumentUseCase = new AddDocumentUseCase(
             this.documentRepository,
-            this.internshipRepository
+            this.uploadDocumentsService
         );
         return await addDocumentUseCase.perform(useCaseRequestModel);
     }
