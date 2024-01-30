@@ -6,6 +6,7 @@ import InternshipRepository from '../../../database/orm/repositories/internship.
 import CompanyRepository from '../../../database/orm/repositories/company.repository';
 import AcademicTutorRepository from '../../../database/orm/repositories/academic-tutor.repository';
 import CompanyTutorRepository from '../../../database/orm/repositories/company-tutor.repository';
+import logger from '@common/logger';
 
 export default class AddInternshipDeliverer extends Deliverer {
     public async respond(): Promise<void> {

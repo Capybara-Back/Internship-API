@@ -7,8 +7,8 @@ services:
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_USER: capybara
-      POSTGRES_PASSWORD: capybara
+      POSTGRES_USER=capybara
+      POSTGRES_PASSWORD=capybara
     volumes:
       - capybara_pg:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/db/init.sql

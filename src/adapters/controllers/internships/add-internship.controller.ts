@@ -10,6 +10,7 @@ import {
     IInternshipRepository
 } from '@core/use-cases/interfaces/i-entity-operation';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
+import logger from '@common/logger';
 
 export default class AddInternshipController
     implements IController<IInternshipDto>
