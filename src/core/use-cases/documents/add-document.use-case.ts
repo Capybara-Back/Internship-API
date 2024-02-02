@@ -46,6 +46,8 @@ export default class AddDocumentUseCase
         const filesUrl = await this.uploadDocumentsService.uploadDocuments(processedDocuments);
         const entities = this.transformFormDocumentToEntities(processedDocuments, filesUrl, levelOfConfidentialityByFile, formData.internshipId);
         const savedEntities = await this.documentRepository.insertMany(entities);
+        await this.deleteFiles(processedDocuments);
+
         return savedEntities.map(entity => this.dataMapper.toDTO(entity));
     }
 
@@ -58,5 +60,11 @@ export default class AddDocumentUseCase
                 internshipId
             });
         });
+    }
+
+    private async deleteFiles(files: DocumentFile[]): Promise<void> {
+        await Promise.all(files.map(async (file) => {
+            await fs.unlink(file.path);
+        }));
     }
 }
