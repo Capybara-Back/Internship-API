@@ -7,13 +7,14 @@ import { IDocumentRepository } from '@core/use-cases/interfaces/i-entity-operati
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
 import { IUploadDocumentsService } from '@core/lib/services/i-upload-documents.service';
 import { ValidationError } from '@common/errors';
+import path from "path";
 
 export default class AddInternshipController
     implements IController<IDocumentDto[]>
 {
     private validation: IValidator;
-    private documentRepository: IDocumentRepository;
-    private uploadDocumentsService: IUploadDocumentsService;
+    private readonly documentRepository: IDocumentRepository;
+    private readonly uploadDocumentsService: IUploadDocumentsService;
 
     public constructor(
         validation: IValidator,
@@ -42,9 +43,10 @@ export default class AddInternshipController
         if (!req.files) {
             throw new ValidationError('No files given to upload');
         }
-        
+
         useCaseRequestModel.documents = req.files.map((file) => ({
-            name: file.filename,
+            name: this.getUniqueFileName(file.filename),
+            originalName: file.filename,
             type: file.mimetype,
             path: file.path
         }));
@@ -54,5 +56,16 @@ export default class AddInternshipController
             this.uploadDocumentsService
         );
         return await addDocumentUseCase.perform(useCaseRequestModel);
+    }
+
+    private getUniqueFileName(name: string): string {
+        const currentDatetime = new Date();
+
+        const formattedDatetime = currentDatetime.toISOString().replace(/[-T:.Z]/g, '');
+
+        const fileExtension = path.extname(name);
+        const baseName = path.basename(name, fileExtension);
+
+        return `${baseName}_${formattedDatetime}${fileExtension}`;
     }
 }
