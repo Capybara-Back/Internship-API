@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import cors from 'cors';
 import RouterHandler from './routers/router.abstract';
 import errorHandler from './middlewares/error-handler';
 import { DatabaseClient } from '../database/orm';
@@ -37,6 +38,7 @@ export default class ExpressApp {
     }
 
     private setAppSettings(): void {
+        this._app.use(cors());
         this._app.use(express.json());
         this._app.use(express.urlencoded({ extended: true }));
     }

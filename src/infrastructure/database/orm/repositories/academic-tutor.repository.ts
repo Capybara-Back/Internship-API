@@ -3,7 +3,7 @@ import DatabaseRepository from '../repository.abstract';
 import AcademicTutor from '@core/entities/academic-tutor.entity';
 import AcademicTutorDbEntity from '../typeorm/entities/AcademicTutor';
 import { Repository } from 'typeorm';
-import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import AcademicTutorMapper from '@core/lib/mappers/academic-tutor.mapper';
 import logger from '@common/logger';
 
@@ -21,11 +21,9 @@ export default class AcademicTutorRepository
     }
 
     async save(entity: AcademicTutor): Promise<AcademicTutor> {
-        logger.debug(entity, 'Entity to be persisted');
         const entityToPersist = await this.repository.create(entity.toJSON());
 
         const savedEntity = await this.repository.save(entityToPersist);
-        logger.debug(savedEntity, 'Saved entity');
         return this._dataMapper.toDomain(savedEntity);
     }
 

@@ -19,6 +19,15 @@ export default class CompanyTutor {
     @Column('varchar')
     email: string;
 
+    @Column('varchar')
+    firstName: string;
+
+    @Column('varchar')
+    lastName: string;
+
+    @Column('varchar')
+    phoneNumber: string;
+
     @OneToOne(() => User, { nullable: true })
     @JoinColumn()
     user?: User;
@@ -31,4 +40,8 @@ export default class CompanyTutor {
         (internship: Internship) => internship.companyTutor
     )
     internships: Internship[];
+
+    public constructor(id: string) {
+        this.id = id;
+    }
 }

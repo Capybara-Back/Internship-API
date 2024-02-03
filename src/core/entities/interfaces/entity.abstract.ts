@@ -39,4 +39,8 @@ export default abstract class Entity<T> {
     public getProps(): T {
         return this.props;
     }
+
+    public setProps(props: T): void {
+        this.props = props;
+    }
 }

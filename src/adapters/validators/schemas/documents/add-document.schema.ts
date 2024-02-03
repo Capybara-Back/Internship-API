@@ -1,20 +1,8 @@
 import { z } from 'zod';
+import { zfd } from 'zod-form-data';
 
-const schema = z
-    .object({
-        title: z.string()
-    })
-    .refine(
-        (schema: any) =>
-            Date.parse(schema.startDate) < Date.parse(schema.endDate),
-        {
-            message: 'Start date must be earlier than End date.'
-        }
-    )
-    .superRefine((schema: any, ctx) => {
-        const hasCompanyId = Boolean(schema.companyId);
-
-        return true;
-    });
+const schema = zfd.formData({
+    data: z.any()
+});
 
 export default schema;

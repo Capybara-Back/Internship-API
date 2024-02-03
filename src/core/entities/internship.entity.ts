@@ -11,11 +11,32 @@ interface IInternshipProps {
     status?: string;
     missionDescription: string;
     company?: Company;
-    companyId: string;
     companyTutor?: CompanyTutor;
-    companyTutorId: string;
     academicTutor?: AcademicTutor;
-    academicTutorId: string;
 }
 
-export default class Internship extends Entity<IInternshipProps> {}
+export default class Internship extends Entity<IInternshipProps> {
+    public getAcademicTutor(): AcademicTutor | undefined {
+        return this.props.academicTutor;
+    }
+
+    public setAcademicTutor(academicTutor: AcademicTutor): void {
+        this.props.academicTutor = academicTutor;
+    }
+
+    public getCompanyTutor(): CompanyTutor | undefined {
+        return this.props.companyTutor;
+    }
+
+    public setCompanyTutor(companyTutor: CompanyTutor): void {
+        this.props.companyTutor = companyTutor;
+    }
+
+    public getCompany(): Company | undefined {
+        return this.props.company;
+    }
+
+    public setCompany(company: Company): void {
+        this.props.company = company;
+    }
+}

@@ -103,24 +103,6 @@ describe('Add internship use case', () => {
             missionDescription: 'description'
         };
 
-        const returnedValue = new Internship(
-            {
-                studentId: '7bc5f3f1-ed92-464f-9175-e4d264c5d102',
-                companyId: 'LTD',
-                companyTutorId: '7bc5f3f1-ed92-464f-9175-e4d264c5d198',
-                academicTutorId: '7bc5f3t5-ed92-464f-9175-e4d264c5d102',
-                startDate: currentDate,
-                endDate: new Date('December 17, 1995 03:24:00'),
-                title: 'Test 1',
-                missionDescription: 'description'
-            },
-            '7bc5f3f1-ed92-464f-9175-e4d264c5d104'
-        );
-
-        mockInternshipsRepository.save = jest
-            .fn()
-            .mockResolvedValue(returnedValue);
-
         const academicTutorValue = new AcademicTutor({
             id: '7bc5f3t5-ed92-464f-9175-e4d264c5d102',
             firstName: 'John',
@@ -156,6 +138,26 @@ describe('Add internship use case', () => {
         mockCompanyTutorRepository.findOne = jest
             .fn()
             .mockResolvedValue(companyTutorValue);
+
+        const returnedValue = new Internship(
+            {
+                studentId: '7bc5f3f1-ed92-464f-9175-e4d264c5d102',
+                company: companyValue,
+                companyTutor: companyTutorValue,
+                academicTutor: academicTutorValue,
+                startDate: currentDate,
+                endDate: new Date('December 17, 1995 03:24:00'),
+                title: 'Test 1',
+                missionDescription: 'description'
+            },
+            '7bc5f3f1-ed92-464f-9175-e4d264c5d104'
+        );
+
+        mockInternshipsRepository.save = jest
+            .fn()
+            .mockResolvedValue(returnedValue);
+
+        
 
         // When
         const result = await new AddInternshipUseCase(

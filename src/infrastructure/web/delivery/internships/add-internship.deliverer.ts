@@ -1,4 +1,4 @@
-import AddInternsipController from '@adapters/controllers/internships/add-internship.controller';
+import AddInternshipController from '@adapters/controllers/internships/add-internship.controller';
 import Deliverer from '../interfaces/deliverer.abstract';
 import { addInternshipValidator } from '@adapters/validators/use-cases/internship';
 import { SuccessResponse } from '@common/contracts';
@@ -6,10 +6,11 @@ import InternshipRepository from '../../../database/orm/repositories/internship.
 import CompanyRepository from '../../../database/orm/repositories/company.repository';
 import AcademicTutorRepository from '../../../database/orm/repositories/academic-tutor.repository';
 import CompanyTutorRepository from '../../../database/orm/repositories/company-tutor.repository';
+import logger from '@common/logger';
 
 export default class AddInternshipDeliverer extends Deliverer {
     public async respond(): Promise<void> {
-        const addInternshipController = new AddInternsipController(
+        const addInternshipController = new AddInternshipController(
             addInternshipValidator,
             new InternshipRepository(),
             new CompanyRepository(),
@@ -22,7 +23,7 @@ export default class AddInternshipDeliverer extends Deliverer {
         try {
             const content =
                 await addInternshipController.processRequest(mappedHttpRequest);
-            this.res.send(SuccessResponse.create(content)).status(200);
+            this.res.send(SuccessResponse.create(content)).status(201);
         } catch (err: any) {
             this.handleError(err);
         }

@@ -3,10 +3,11 @@ import DatabaseRepository from '../repository.abstract';
 import Internship from '@core/entities/internship.entity';
 import InternshipDbEntity from '../typeorm/entities/Internship';
 import { Repository } from 'typeorm';
-import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
-import Student from '../typeorm/entities/Student';
+import logger from '@common/logger';
 import AcademicTutor from '../typeorm/entities/AcademicTutor';
+import Student from '../typeorm/entities/Student';
 import CompanyTutor from '../typeorm/entities/CompanyTutor';
 import Company from '../typeorm/entities/Company';
 
@@ -26,22 +27,26 @@ export default class InternshipRepository
     async save(entity: Internship): Promise<Internship> {
         const entityProps = entity.getProps();
 
+        if (
+            entityProps.academicTutor?.id === undefined ||
+            entityProps.companyTutor?.id === undefined ||
+            entityProps.company?.id === undefined
+        ) {
+            throw new Error(
+                'Internship must have academic tutor, company tutor and company ids'
+            );
+        }
+
         const entityToPersist = await this.repository.create({
             missionDescription: entityProps.missionDescription,
             title: entityProps.title,
             startDate: entityProps.startDate,
-            endDate: entityProps.endDate
+            endDate: entityProps.endDate,
+            student: new Student(entityProps.studentId),
+            academicTutor: new AcademicTutor(entityProps.academicTutor.id),
+            companyTutor: new CompanyTutor(entityProps.companyTutor.id),
+            company: new Company(entityProps.company?.getProps().name)
         });
-
-        entityToPersist.student = new Student();
-        entityToPersist.student.id = entityProps.studentId;
-        entityToPersist.academicTutor = new AcademicTutor();
-        entityToPersist.academicTutor.id = entityProps.academicTutorId;
-        entityToPersist.companyTutor = new CompanyTutor();
-        entityToPersist.companyTutor.id = entityProps.companyTutorId;
-        entityToPersist.company = new Company();
-        entityToPersist.company.name = entityProps.companyId;
-
         const savedEntity = await this.repository.save(entityToPersist);
         return this._dataMapper.toDomain(savedEntity);
     }
@@ -70,8 +75,17 @@ export default class InternshipRepository
     }
 
     async findAll(): Promise<Internship[]> {
-        const results = await this.repository.find();
-        return results.map((entity) => this._dataMapper.toDomain(entity));
+        return (
+            await this.repository
+                .createQueryBuilder('internship')
+                .leftJoinAndSelect('internship.student', 'studentId')
+                .leftJoinAndSelect('internship.company', 'company')
+                .leftJoinAndSelect('internship.companyTutor', 'companyTutor')
+                .leftJoinAndSelect('companyTutor.user', 'companyTutorUser')
+                .leftJoinAndSelect('internship.academicTutor', 'academicTutor')
+                .leftJoinAndSelect('academicTutor.user', 'academicTutorUser')
+                .getMany()
+        ).map((entity) => this._dataMapper.toDomain(entity));
     }
 
     async findOne(id: string): Promise<Internship | null> {

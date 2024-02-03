@@ -21,4 +21,8 @@ export default class Company {
 
     @OneToMany(() => Internship, (internship) => internship.company)
     internships: Internship[];
+
+    public constructor(name: string) {
+        this.name = name;
+    }
 }

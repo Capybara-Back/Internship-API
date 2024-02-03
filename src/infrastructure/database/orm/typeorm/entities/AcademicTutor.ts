@@ -15,6 +15,18 @@ export default class AcademicTutor {
     id: string;
 
     @Column('varchar')
+    firstName: string;
+
+    @Column('varchar')
+    lastName: string;
+
+    @Column('varchar')
+    phoneNumber: string;
+
+    @Column('varchar')
+    email: string;
+
+    @Column('varchar')
     schoolEmail: string;
 
     @OneToOne(() => User, { nullable: true })
@@ -26,4 +38,8 @@ export default class AcademicTutor {
         (internship: Internship) => internship.academicTutor
     )
     internships: Internship[];
+
+    public constructor(id: string) {
+        this.id = id;
+    }
 }

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { FailResponse } from '../../../common/contracts';
-import logger from '@common/logger';
+import { FailResponse } from '@common/contracts';
 
 export default function errorHandler(
     err: any,
@@ -8,11 +7,10 @@ export default function errorHandler(
     res: Response,
     _: NextFunction
 ): void {
-    res.status(err.code || 500);
-    res.send(
+    res.status(err.code || 500).send(
         FailResponse.create({
             msg: err.msg || err.message || 'No message was given',
-            reason: err.reason || err.stack || 'Something went wrong',
+            reason: err.reason || 'Something went wrong',
             validationErrors: err.validationErrors
         })
     );

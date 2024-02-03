@@ -1,13 +1,15 @@
-import IEntityMapper from './i-entity-mapper';
 import AcademicTutor from '@core/entities/academic-tutor.entity';
 import { IAcademicTutorDto } from '@core/interfaces/dtos/academic-tutor.dto';
+import EntityMapper from './entity.mapper';
 
-export default class AcademicTutorMapper
-    implements IEntityMapper<AcademicTutor, IAcademicTutorDto>
-{
+export default class AcademicTutorMapper extends EntityMapper<
+    AcademicTutor,
+    IAcademicTutorDto
+> {
     public toDomain(raw: { [key: string]: any }): AcademicTutor {
         return new AcademicTutor(
             {
+                id: raw.id,
                 firstName: raw.firstName,
                 lastName: raw.lastName,
                 phoneNumber: raw.phoneNumber,

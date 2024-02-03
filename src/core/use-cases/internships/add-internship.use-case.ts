@@ -1,8 +1,8 @@
 import IUseCase from '@core/interfaces/i-use-case';
-import { IAddInternsipRequestModel } from '@core/interfaces/request-models/internship.request-model';
+import { IAddInternshipRequestModel } from '@core/interfaces/request-models/internship.request-model';
 import Internship from '@core/entities/internship.entity';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
-import IEntityMapper from '@core/lib/mappers/i-entity-mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
 import {
     IAcademicTutorRepository,
@@ -16,7 +16,7 @@ import Company from '@core/entities/company.entity';
 import { ValueNotFoundError } from '@common/errors';
 
 export default class AddInternshipUseCase
-    implements IUseCase<IAddInternsipRequestModel, IInternshipDto>
+    implements IUseCase<IAddInternshipRequestModel, IInternshipDto>
 {
     private internshipRepository: IInternshipRepository;
     private companyRepository: ICompanyRepository;
@@ -38,37 +38,35 @@ export default class AddInternshipUseCase
     }
 
     async perform(
-        requestModel: IAddInternsipRequestModel
+        requestModel: IAddInternshipRequestModel
     ): Promise<IInternshipDto> {
         const internship = this.transformRequestModelIntoEntity(requestModel);
 
-        const companyEntity = internship.getProps().company;
         const company = await this.tryToFindOneOrSaveCompany(
-            companyEntity,
-            internship?.getProps()?.companyId
+            internship.getCompany(),
+            requestModel.companyId
         );
 
-        const academicTutorEntity = internship.getProps().academicTutor;
+        internship.setCompany(company);
+
         const academicTutor = await this.tryToFindOneOrSaveAcademicTutor(
-            academicTutorEntity,
-            internship?.getProps()?.academicTutorId
+            internship.getAcademicTutor(),
+            requestModel.academicTutorId
         );
 
-        const companyTutorEntity = internship.getProps().companyTutor;
+        internship.setAcademicTutor(academicTutor);
+
         const companyTutor = await this.tryToFindOneOrSaveCompanyTutor(
-            companyTutorEntity,
-            internship.getProps().companyTutorId
+            internship.getCompanyTutor(),
+            requestModel.companyTutorId,
+            company.getProps().name
         );
+        internship.setCompanyTutor(companyTutor);
 
-        const entityWithRelation = new Internship({
-            ...internship.getProps(),
-            companyId: company!.getProps().name,
-            academicTutorId: academicTutor.id || 'default',
-            companyTutorId: companyTutor.id || 'default'
-        });
-
-        const savedEntity =
-            await this.internshipRepository.save(entityWithRelation);
+        const savedEntity = await this.internshipRepository.save(internship);
+        savedEntity.setCompany(company);
+        savedEntity.setAcademicTutor(academicTutor);
+        savedEntity.setCompanyTutor(companyTutor);
         return this.dataMapper.toDTO(savedEntity);
     }
 
@@ -117,7 +115,8 @@ export default class AddInternshipUseCase
 
     private async tryToFindOneOrSaveCompanyTutor(
         companyTutor?: CompanyTutor,
-        companyTutorId?: string
+        companyTutorId?: string,
+        companyId?: string
     ): Promise<CompanyTutor> {
         if (companyTutorId) {
             const foundCompanyTutor =
@@ -130,67 +129,48 @@ export default class AddInternshipUseCase
             }
 
             return foundCompanyTutor;
-        } else {
-            return await this.companyTutorRepository.save(
-                new CompanyTutor(companyTutor!.getProps())
-            );
+        } else if (companyTutor != null) {
+            companyTutor.setCompanyName(companyId!);
+            return await this.companyTutorRepository.save(companyTutor);
         }
+        throw new ValueNotFoundError(
+            'Company tutor id or company tutor must be provided'
+        );
     }
 
     transformRequestModelIntoEntity(
-        requestModel: IAddInternsipRequestModel
+        requestModel: IAddInternshipRequestModel
     ): Internship {
-        const {
-            studentId,
-            startDate,
-            endDate,
-            title,
-            missionDescription,
-            academicTutorId,
-            academicTutor,
-            companyTutorId,
-            companyTutor,
-            companyId,
-            company
-        } = requestModel;
+        const { studentId, startDate, endDate, title, missionDescription } =
+            requestModel;
 
-        return new Internship({
+        const internship = new Internship({
             studentId,
             startDate,
             endDate,
             title,
-            missionDescription,
-            academicTutorId,
-            companyTutorId,
-            companyId,
-            academicTutor:
-                academicTutor != null
-                    ? new AcademicTutor({
-                          firstName: academicTutor.firstName,
-                          lastName: academicTutor.lastName,
-                          phoneNumber: academicTutor.phoneNumber,
-                          email: academicTutor.email,
-                          schoolEmail: academicTutor.email
-                      })
-                    : undefined,
-            companyTutor:
-                companyTutor != null
-                    ? new CompanyTutor({
-                          firstName: companyTutor.firstName,
-                          lastName: companyTutor.lastName,
-                          phoneNumber: companyTutor.phoneNumber,
-                          email: companyTutor.email
-                      })
-                    : undefined,
-            company:
-                company != null
-                    ? new Company({
-                          name: company.name,
-                          address: company.address,
-                          city: company.city,
-                          zipCode: company.zipCode
-                      })
-                    : undefined
+            missionDescription
         });
+
+        if (requestModel.academicTutor) {
+            internship.setAcademicTutor(
+                new AcademicTutor({
+                    ...requestModel.academicTutor,
+                    schoolEmail: requestModel.academicTutor.email
+                })
+            );
+        }
+
+        if (requestModel.companyTutor) {
+            internship.setCompanyTutor(
+                new CompanyTutor({ ...requestModel.companyTutor })
+            );
+        }
+
+        if (requestModel.company) {
+            internship.setCompany(new Company({ ...requestModel.company }));
+        }
+
+        return internship;
     }
 }
