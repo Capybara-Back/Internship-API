@@ -2,32 +2,41 @@ import IController from '../interfaces/i-controller';
 import IHttpRequestModel from '../interfaces/i-http-request.model';
 import IValidator from '../interfaces/i-validator';
 import AddDocumentUseCase from '@core/use-cases/documents/add-document.use-case';
-import { IAddDocumentFormData, IAddDocumentRequestModel } from '@core/interfaces/request-models/document.request-model';
-import { IDocumentRepository } from '@core/use-cases/interfaces/i-entity-operation';
+import {
+    IAddDocumentFormData,
+    IAddDocumentRequestModel
+} from '@core/interfaces/request-models/document.request-model';
+import {
+    IDocumentRepository,
+    IInternshipRepository
+} from '@core/use-cases/interfaces/i-entity-operation';
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
 import { IUploadDocumentsService } from '@core/lib/services/i-upload-documents.service';
 import { ValidationError } from '@common/errors';
-import path from "path";
+import path from 'path';
 
 export default class AddInternshipController
     implements IController<IDocumentDto[]>
 {
     private validation: IValidator;
     private readonly documentRepository: IDocumentRepository;
+    private internshipRepository: IInternshipRepository;
     private readonly uploadDocumentsService: IUploadDocumentsService;
 
     public constructor(
         validation: IValidator,
         documentRepository: IDocumentRepository,
+        internshipRepository: IInternshipRepository,
         uploadDocumentsService: IUploadDocumentsService
     ) {
         this.validation = validation;
         this.documentRepository = documentRepository;
+        this.internshipRepository = internshipRepository;
         this.uploadDocumentsService = uploadDocumentsService;
     }
 
     async processRequest(req: IHttpRequestModel): Promise<IDocumentDto[]> {
-        if(req.params.internshipId === undefined) {
+        if (req.params.internshipId === undefined) {
             throw new ValidationError('Internship id is required');
         }
         const requestValidated =
@@ -37,7 +46,9 @@ export default class AddInternshipController
             throw requestValidated.getError();
         }
 
-        const useCaseRequestModel = JSON.parse(requestValidated.getValue()!.data) as IAddDocumentFormData;
+        const useCaseRequestModel = JSON.parse(
+            requestValidated.getValue()!.data
+        ) as IAddDocumentFormData;
         useCaseRequestModel.internshipId = req.params.internshipId;
 
         if (!req.files) {
@@ -53,6 +64,7 @@ export default class AddInternshipController
 
         const addDocumentUseCase = new AddDocumentUseCase(
             this.documentRepository,
+            this.internshipRepository,
             this.uploadDocumentsService
         );
         return await addDocumentUseCase.perform(useCaseRequestModel);
@@ -61,7 +73,9 @@ export default class AddInternshipController
     private getUniqueFileName(name: string): string {
         const currentDatetime = new Date();
 
-        const formattedDatetime = currentDatetime.toISOString().replace(/[-T:.Z]/g, '');
+        const formattedDatetime = currentDatetime
+            .toISOString()
+            .replace(/[-T:.Z]/g, '');
 
         const fileExtension = path.extname(name);
         const baseName = path.basename(name, fileExtension);
