@@ -28,5 +28,5 @@ export interface IAcademicTutorRepository extends IRepository<AcademicTutor> {}
 export interface ICompanyTutorRepository extends IRepository<CompanyTutor> {}
 
 export interface IDocumentRepository extends IRepository<Document> {
-    insertMany(entities: Document[]): Promise<Document[]>
+    insertMany(entities: Document[]): Promise<Document[]>;
 }

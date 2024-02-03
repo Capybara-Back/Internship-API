@@ -11,7 +11,6 @@ import Student from '../typeorm/entities/Student';
 import CompanyTutor from '../typeorm/entities/CompanyTutor';
 import Company from '../typeorm/entities/Company';
 
-
 export default class InternshipRepository
     extends DatabaseRepository
     implements IInternshipRepository
@@ -28,16 +27,25 @@ export default class InternshipRepository
     async save(entity: Internship): Promise<Internship> {
         const entityProps = entity.getProps();
 
+        if (
+            entityProps.academicTutor?.id === undefined ||
+            entityProps.companyTutor?.id === undefined ||
+            entityProps.company?.id === undefined
+        ) {
+            throw new Error(
+                'Internship must have academic tutor, company tutor and company ids'
+            );
+        }
+
         const entityToPersist = await this.repository.create({
             missionDescription: entityProps.missionDescription,
             title: entityProps.title,
             startDate: entityProps.startDate,
             endDate: entityProps.endDate,
             student: new Student(entityProps.studentId),
-            academicTutor: new AcademicTutor(entityProps.academicTutor?.id!),
-            companyTutor: new CompanyTutor(entityProps.companyTutor?.id!),
-            company: new Company(entityProps.company?.getProps().name!)
-
+            academicTutor: new AcademicTutor(entityProps.academicTutor.id),
+            companyTutor: new CompanyTutor(entityProps.companyTutor.id),
+            company: new Company(entityProps.company?.getProps().name)
         });
         const savedEntity = await this.repository.save(entityToPersist);
         return this._dataMapper.toDomain(savedEntity);

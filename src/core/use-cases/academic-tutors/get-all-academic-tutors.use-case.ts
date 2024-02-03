@@ -1,11 +1,13 @@
-import { IAcademicTutorDto } from "@core/interfaces/dtos/academic-tutor.dto";
-import IUseCase from "@core/interfaces/i-use-case";
-import { IAcademicTutorRepository } from "@core/use-cases/interfaces/i-entity-operation";
-import IEntityMapper from "@core/lib/mappers/interfaces/i-entity-mapper";
-import AcademicTutor from "@core/entities/academic-tutor.entity";
-import AcademicTutorMapper from "@core/lib/mappers/academic-tutor.mapper";
+import { IAcademicTutorDto } from '@core/interfaces/dtos/academic-tutor.dto';
+import IUseCase from '@core/interfaces/i-use-case';
+import { IAcademicTutorRepository } from '@core/use-cases/interfaces/i-entity-operation';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
+import AcademicTutor from '@core/entities/academic-tutor.entity';
+import AcademicTutorMapper from '@core/lib/mappers/academic-tutor.mapper';
 
-export default class GetAllAcademicTutorsUseCase implements IUseCase<any, IAcademicTutorDto[]> {
+export default class GetAllAcademicTutorsUseCase
+    implements IUseCase<any, IAcademicTutorDto[]>
+{
     private academicTutorRepository: IAcademicTutorRepository;
     private dataMapper: IEntityMapper<AcademicTutor, IAcademicTutorDto>;
 

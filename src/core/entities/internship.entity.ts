@@ -16,7 +16,6 @@ interface IInternshipProps {
 }
 
 export default class Internship extends Entity<IInternshipProps> {
-
     public getAcademicTutor(): AcademicTutor | undefined {
         return this.props.academicTutor;
     }

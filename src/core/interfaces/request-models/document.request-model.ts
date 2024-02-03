@@ -1,4 +1,4 @@
-import { DocumentFile } from "@core/lib/services/i-upload-documents.service";
+import { DocumentFile } from '@core/lib/services/i-upload-documents.service';
 
 export interface IAddDocumentMetadata {
     filename: string;
@@ -12,5 +12,5 @@ export interface IAddDocumentFormData {
 }
 
 export interface IAddDocumentRequestModel {
-    data: string
+    data: string;
 }

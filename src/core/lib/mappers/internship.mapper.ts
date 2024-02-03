@@ -10,12 +10,18 @@ import CompanyMapper from './company.mapper';
 import logger from '@common/logger';
 import EntityMapper from './entity.mapper';
 
-export default class InternshipMapper
-    extends EntityMapper<Internship, IInternshipDto>
-{
-
-    private academicTutorMapper: Pick<IEntityMapper<AcademicTutor, any>, 'toDomain'>;
-    private companyTutorMapper: Pick<IEntityMapper<CompanyTutor, any>, 'toDomain'>;
+export default class InternshipMapper extends EntityMapper<
+    Internship,
+    IInternshipDto
+> {
+    private academicTutorMapper: Pick<
+        IEntityMapper<AcademicTutor, any>,
+        'toDomain'
+    >;
+    private companyTutorMapper: Pick<
+        IEntityMapper<CompanyTutor, any>,
+        'toDomain'
+    >;
     private companyMapper: Pick<IEntityMapper<Company, any>, 'toDomain'>;
 
     public constructor() {
@@ -28,24 +34,31 @@ export default class InternshipMapper
     public toDomain(raw: { [key: string]: any }): Internship {
         delete raw?.academicTutor?.user?.password;
         delete raw?.companyTutor?.user?.password;
-        const internship = new Internship({
-            studentId: raw.studentId,
-            title: raw.title,
-            startDate: raw.startDate,
-            endDate: raw.endDate,
-            status: raw.status,
-            missionDescription: raw.missionDescription,
-        }, raw.id);
+        const internship = new Internship(
+            {
+                studentId: raw.studentId,
+                title: raw.title,
+                startDate: raw.startDate,
+                endDate: raw.endDate,
+                status: raw.status,
+                missionDescription: raw.missionDescription
+            },
+            raw.id
+        );
 
         return internship;
     }
 
-    public toDomainWithRelation(raw: { [key: string]: any; }): Internship {
+    public toDomainWithRelation(raw: { [key: string]: any }): Internship {
         const internship = this.toDomain(raw);
 
-        internship.setAcademicTutor(this.academicTutorMapper.toDomain(raw.academicTutor));
+        internship.setAcademicTutor(
+            this.academicTutorMapper.toDomain(raw.academicTutor)
+        );
         internship.setCompany(this.companyMapper.toDomain(raw.company));
-        internship.setCompanyTutor(this.companyTutorMapper.toDomain(raw.companyTutor,));
+        internship.setCompanyTutor(
+            this.companyTutorMapper.toDomain(raw.companyTutor)
+        );
 
         return internship;
     }

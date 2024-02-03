@@ -63,11 +63,10 @@ export default class AddInternshipUseCase
         );
         internship.setCompanyTutor(companyTutor);
 
-        const savedEntity =
-            await this.internshipRepository.save(internship);
+        const savedEntity = await this.internshipRepository.save(internship);
         savedEntity.setCompany(company);
         savedEntity.setAcademicTutor(academicTutor);
-        savedEntity.setCompanyTutor(companyTutor);    
+        savedEntity.setCompanyTutor(companyTutor);
         return this.dataMapper.toDTO(savedEntity);
     }
 
@@ -130,25 +129,20 @@ export default class AddInternshipUseCase
             }
 
             return foundCompanyTutor;
-        } else if(companyTutor != null) {
+        } else if (companyTutor != null) {
             companyTutor.setCompanyName(companyId!);
-            return await this.companyTutorRepository.save(
-                companyTutor
-            );
+            return await this.companyTutorRepository.save(companyTutor);
         }
-        throw new ValueNotFoundError('Company tutor id or company tutor must be provided');
+        throw new ValueNotFoundError(
+            'Company tutor id or company tutor must be provided'
+        );
     }
 
     transformRequestModelIntoEntity(
         requestModel: IAddInternshipRequestModel
     ): Internship {
-        const {
-            studentId,
-            startDate,
-            endDate,
-            title,
-            missionDescription,
-        } = requestModel;
+        const { studentId, startDate, endDate, title, missionDescription } =
+            requestModel;
 
         const internship = new Internship({
             studentId,
@@ -160,7 +154,10 @@ export default class AddInternshipUseCase
 
         if (requestModel.academicTutor) {
             internship.setAcademicTutor(
-                new AcademicTutor({ ...requestModel.academicTutor, schoolEmail: requestModel.academicTutor.email })
+                new AcademicTutor({
+                    ...requestModel.academicTutor,
+                    schoolEmail: requestModel.academicTutor.email
+                })
             );
         }
 

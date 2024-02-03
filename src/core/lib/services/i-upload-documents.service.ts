@@ -1,4 +1,3 @@
-
 export interface DocumentFile {
     originalName: string;
     name: string;

@@ -30,11 +30,13 @@ export default class DocumentRepository
         return this._dataMapper.toDomain(savedEntity);
     }
 
-    async insertMany(entities: Document[]): Promise<Document[]>{
+    async insertMany(entities: Document[]): Promise<Document[]> {
         const entitiesToPersist = entities.map((entity) => {
             const entityProps = entity.getProps();
             const entityToPersist = this.repository.create(entityProps);
-            entityToPersist.internship = new Internship(entityProps.internshipId);
+            entityToPersist.internship = new Internship(
+                entityProps.internshipId
+            );
             return entityToPersist;
         });
         const savedEntities = await this.repository.save(entitiesToPersist);

@@ -3,5 +3,5 @@ export default interface IEntityMapper<E, DTO> {
 
     toDomain(raw: { [key: string]: any }): E;
 
-    toDomainWithRelation(raw: { [key: string]: any }): E
+    toDomainWithRelation(raw: { [key: string]: any }): E;
 }

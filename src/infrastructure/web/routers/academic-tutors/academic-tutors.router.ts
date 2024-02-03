@@ -1,5 +1,5 @@
-import RouterHandler from "../router.abstract";
-import GetAllAcademicTutorsDeliverer from "@infra/web/delivery/academic-tutors/academic-tutors.delivrer";
+import RouterHandler from '../router.abstract';
+import GetAllAcademicTutorsDeliverer from '@infra/web/delivery/academic-tutors/academic-tutors.delivrer';
 
 export default class AcademicTutorRouter extends RouterHandler {
     public constructor() {
@@ -8,6 +8,9 @@ export default class AcademicTutorRouter extends RouterHandler {
     }
 
     private initRoutes(): void {
-        this._router.get('/', this.handleRequest(GetAllAcademicTutorsDeliverer));
+        this._router.get(
+            '/',
+            this.handleRequest(GetAllAcademicTutorsDeliverer)
+        );
     }
 }

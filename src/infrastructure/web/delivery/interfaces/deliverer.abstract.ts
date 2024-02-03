@@ -24,7 +24,7 @@ export default abstract class Deliverer {
             params: req.params,
             body: req.body,
             headers: req.headers,
-            files: (req.files as Express.Multer.File[]) || undefined,
+            files: (req.files as Express.Multer.File[]) || undefined
         };
     }
 }

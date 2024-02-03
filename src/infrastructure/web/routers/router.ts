@@ -20,6 +20,7 @@ export default class MainRouter extends RouterHandler {
         );
         this._router.use(
             '/academic-tutors',
-            new AcademicTutorRouter().getRouter());
+            new AcademicTutorRouter().getRouter()
+        );
     }
 }

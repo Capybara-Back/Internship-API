@@ -7,4 +7,4 @@ interface IDocumentProps {
     internshipId: string;
 }
 
-export default class Document extends Entity<IDocumentProps> { }
+export default class Document extends Entity<IDocumentProps> {}

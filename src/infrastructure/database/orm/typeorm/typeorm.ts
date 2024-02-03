@@ -26,6 +26,14 @@ export const dataSource = new DataSource({
     ...postgresConfig,
     type: 'postgres',
     logging: false,
-    entities: [User, AcademicTutor, Company, CompanyTutor, Document, Internship, Student],
+    entities: [
+        User,
+        AcademicTutor,
+        Company,
+        CompanyTutor,
+        Document,
+        Internship,
+        Student
+    ],
     synchronize: true
 });

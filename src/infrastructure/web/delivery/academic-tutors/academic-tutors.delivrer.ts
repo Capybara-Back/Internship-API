@@ -1,7 +1,7 @@
-import AcademicTutorRepository from "@infra/database/orm/repositories/academic-tutor.repository";
-import Deliverer from "../interfaces/deliverer.abstract";
-import GetAllAcademicTutorsController from "@adapters/controllers/academic_tutors/get-all-academic-tutors.controller";
-import { SuccessResponse } from "@common/contracts";
+import AcademicTutorRepository from '@infra/database/orm/repositories/academic-tutor.repository';
+import Deliverer from '../interfaces/deliverer.abstract';
+import GetAllAcademicTutorsController from '@adapters/controllers/academic_tutors/get-all-academic-tutors.controller';
+import { SuccessResponse } from '@common/contracts';
 
 export default class GetAllAcademicTutorsDeliverer extends Deliverer {
     public async respond(): Promise<void> {
