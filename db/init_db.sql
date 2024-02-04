@@ -12,5 +12,5 @@ INSERT INTO public.company_tutor(
 	id, email, "userId", "companyName", "firstName", "lastName", "phoneNumber")
 	VALUES ('42ab37be-af42-44da-9dd6-1c09aa6c473a', 'john.johonson@gmail.com.invalid', null, 'Dassault Systèmes', 'John', 'Johonson', '0123456789');
 INSERT INTO public.academic_tutor(
-	id, "schoolEmail", "userId")
-	VALUES ('8ecc03fe-0200-4a36-9b29-981a5c69f64d', 'jean-jacques.augustin@efrei.net', null);              
+	id, "schoolEmail", "userId", "email", "firstName", "lastName", "phoneNumber")
+	VALUES ('8ecc03fe-0200-4a36-9b29-981a5c69f64d', 'jean-jacques.augustin@efrei.net', null, 'jean-jacques.augustin@email.com', 'Jacques', 'Augustin', '0111111111');
