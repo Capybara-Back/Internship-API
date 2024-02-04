@@ -1,6 +1,6 @@
 // import InternshipRouter from './internships/internship.router';
 import AcademicTutorRouter from './academic-tutors/academic-tutors.router';
-import CompanyTutorRouter from './company-tutors/conpany-tutors.router';
+import CompanyTutorRouter from './company-tutors/company-tutors.router';
 import DocumentRouter from './documents/document.router';
 import InternshipRouter from './internships/internship.router';
 import RouterHandler from './router.abstract';
