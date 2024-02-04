@@ -53,9 +53,8 @@ export default class AddInternshipUseCase
             internship.getAcademicTutor(),
             requestModel.academicTutorId
         );
-
+        
         internship.setAcademicTutor(academicTutor);
-
         const companyTutor = await this.tryToFindOneOrSaveCompanyTutor(
             internship.getCompanyTutor(),
             requestModel.companyTutorId,
@@ -127,6 +126,7 @@ export default class AddInternshipUseCase
                     `The company tutor ${companyTutorId} does not exist`
                 );
             }
+            foundCompanyTutor.setCompanyName(companyId!);
 
             return foundCompanyTutor;
         } else if (companyTutor != null) {

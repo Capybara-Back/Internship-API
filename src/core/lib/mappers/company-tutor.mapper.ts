@@ -13,8 +13,7 @@ export default class CompanyTutorMapper extends EntityMapper<
                 firstName: raw.firstName,
                 lastName: raw.lastName,
                 phoneNumber: raw.phoneNumber,
-                email: raw.email,
-                companyName: raw.company.name
+                email: raw.email
             },
             raw.id
         );

@@ -1,5 +1,4 @@
 import Entity from './interfaces/entity.abstract';
-import Internship from './internship.entity';
 
 interface ICompanyProps {
     name: string;

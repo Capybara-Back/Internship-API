@@ -30,7 +30,7 @@ export default class InternshipRepository
         if (
             entityProps.academicTutor?.id === undefined ||
             entityProps.companyTutor?.id === undefined ||
-            entityProps.company?.id === undefined
+            entityProps.company?.getProps().name === undefined
         ) {
             throw new Error(
                 'Internship must have academic tutor, company tutor and company ids'
