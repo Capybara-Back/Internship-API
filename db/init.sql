@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS public.internship
     "startDate" date NOT NULL,
     "endDate" date NOT NULL,
     status internship_status_enum DEFAULT 'pending'::internship_status_enum,
-    salary numeric NOT NULL
+    salary numeric NOT NULL,
     "studentId" uuid,
     "academicTutorId" uuid,
     "companyTutorId" uuid,
