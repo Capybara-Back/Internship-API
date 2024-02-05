@@ -1,11 +1,13 @@
-import { IAcademicTutorRepository } from '@core/use-cases/interfaces/i-entity-operation';
-import DatabaseRepository from '../repository.abstract';
 import AcademicTutor from '@core/entities/academic-tutor.entity';
-import AcademicTutorDbEntity from '../typeorm/entities/AcademicTutor';
-import { Repository } from 'typeorm';
-import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import AcademicTutorMapper from '@core/lib/mappers/academic-tutor.mapper';
-import logger from '@common/logger';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
+import {
+    IAcademicTutorRepository,
+    type IFindOptions
+} from '@core/use-cases/interfaces/i-entity-operation';
+import { Like, Repository } from 'typeorm';
+import DatabaseRepository from '../repository.abstract';
+import AcademicTutorDbEntity from '../typeorm/entities/AcademicTutor';
 
 export default class AcademicTutorRepository
     extends DatabaseRepository
@@ -55,8 +57,16 @@ export default class AcademicTutorRepository
         return true;
     }
 
-    async findAll(): Promise<AcademicTutor[]> {
-        const results = await this.repository.find();
+    async findAll(options?: IFindOptions): Promise<AcademicTutor[]> {
+        const findOption = options?.searchTerm
+            ? {
+                  where: [
+                      { firstName: Like(`${options.searchTerm}%`) },
+                      { lastName: Like(`${options.searchTerm}%`) }
+                  ]
+              }
+            : undefined;
+        const results = await this.repository.find(findOption);
         return results.map((entity) => this._dataMapper.toDomain(entity));
     }
 

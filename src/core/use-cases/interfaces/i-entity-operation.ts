@@ -1,8 +1,8 @@
 import AcademicTutor from '@core/entities/academic-tutor.entity';
 import CompanyTutor from '@core/entities/company-tutor.entity';
 import Company from '@core/entities/company.entity';
-import Internship from '@core/entities/internship.entity';
 import Document from '@core/entities/document.entity';
+import Internship from '@core/entities/internship.entity';
 
 interface IWrite<T> {
     save(entity: T): Promise<T>;
@@ -10,8 +10,12 @@ interface IWrite<T> {
     delete(id: string): Promise<true | null>;
 }
 
+export interface IFindOptions {
+    searchTerm: string;
+}
+
 interface IRead<T> {
-    findAll(): Promise<T[]>;
+    findAll(options?: IFindOptions): Promise<T[]>;
     findOne(id: string): Promise<T | null>;
 }
 

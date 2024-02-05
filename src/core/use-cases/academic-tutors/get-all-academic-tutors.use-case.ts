@@ -1,9 +1,10 @@
+import AcademicTutor from '@core/entities/academic-tutor.entity';
 import { IAcademicTutorDto } from '@core/interfaces/dtos/academic-tutor.dto';
 import IUseCase from '@core/interfaces/i-use-case';
-import { IAcademicTutorRepository } from '@core/use-cases/interfaces/i-entity-operation';
-import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
-import AcademicTutor from '@core/entities/academic-tutor.entity';
+import type { IGetAllAcademicTutorRequestModel } from '@core/interfaces/request-models/academic-tutor.request-model';
 import AcademicTutorMapper from '@core/lib/mappers/academic-tutor.mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
+import { IAcademicTutorRepository } from '@core/use-cases/interfaces/i-entity-operation';
 
 export default class GetAllAcademicTutorsUseCase
     implements IUseCase<any, IAcademicTutorDto[]>
@@ -16,8 +17,16 @@ export default class GetAllAcademicTutorsUseCase
         this.dataMapper = new AcademicTutorMapper();
     }
 
-    async perform(_: any): Promise<IAcademicTutorDto[]> {
-        const academicTutors = await this.academicTutorRepository.findAll();
+    async perform(
+        requestModel: IGetAllAcademicTutorRequestModel
+    ): Promise<IAcademicTutorDto[]> {
+        const options = requestModel.querySearch
+            ? {
+                  searchTerm: requestModel.querySearch
+              }
+            : undefined;
+        const academicTutors =
+            await this.academicTutorRepository.findAll(options);
         return academicTutors.map((item) => this.dataMapper.toDTO(item));
     }
 }
