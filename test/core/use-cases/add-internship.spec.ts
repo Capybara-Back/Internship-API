@@ -1,3 +1,7 @@
+import AcademicTutor from '../../../src/core/entities/academic-tutor.entity';
+import CompanyTutor from '../../../src/core/entities/company-tutor.entity';
+import Company from '../../../src/core/entities/company.entity';
+import Internship from '../../../src/core/entities/internship.entity';
 import {
     IAcademicTutorRepository,
     ICompanyRepository,
@@ -5,10 +9,6 @@ import {
     IInternshipRepository
 } from '../../../src/core/use-cases/interfaces/i-entity-operation';
 import AddInternshipUseCase from '../../../src/core/use-cases/internships/add-internship.use-case';
-import Internship from '../../../src/core/entities/internship.entity';
-import AcademicTutor from '../../../src/core/entities/academic-tutor.entity';
-import Company from '../../../src/core/entities/company.entity';
-import CompanyTutor from '../../../src/core/entities/company-tutor.entity';
 
 describe('Add internship use case', () => {
     class MockInternshipsRepository implements IInternshipRepository {
@@ -99,6 +99,7 @@ describe('Add internship use case', () => {
             academicTutorId: '7bc5f3t5-ed92-464f-9175-e4d264c5d102',
             startDate: currentDate,
             endDate: new Date('December 17, 1995 03:24:00'),
+            salary: 1000,
             title: 'Test 1',
             missionDescription: 'description'
         };
@@ -147,6 +148,7 @@ describe('Add internship use case', () => {
                 academicTutor: academicTutorValue,
                 startDate: currentDate,
                 endDate: new Date('December 17, 1995 03:24:00'),
+                salary: 1000,
                 title: 'Test 1',
                 missionDescription: 'description'
             },
@@ -157,7 +159,7 @@ describe('Add internship use case', () => {
             .fn()
             .mockResolvedValue(returnedValue);
 
-        
+
 
         // When
         const result = await new AddInternshipUseCase(
