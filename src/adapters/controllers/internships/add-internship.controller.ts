@@ -1,7 +1,4 @@
-import IController from '../interfaces/i-controller';
-import IHttpRequestModel from '../interfaces/i-http-request.model';
-import IValidator from '../interfaces/i-validator';
-import AddInternshipUseCase from '@core/use-cases/internships/add-internship.use-case';
+import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 import { IAddInternshipRequestModel } from '@core/interfaces/request-models/internship.request-model';
 import {
     IAcademicTutorRepository,
@@ -9,7 +6,10 @@ import {
     ICompanyTutorRepository,
     IInternshipRepository
 } from '@core/use-cases/interfaces/i-entity-operation';
-import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
+import AddInternshipUseCase from '@core/use-cases/internships/add-internship.use-case';
+import IController from '../interfaces/i-controller';
+import IHttpRequestModel from '../interfaces/i-http-request.model';
+import IValidator from '../interfaces/i-validator';
 
 export default class AddInternshipController
     implements IController<IInternshipDto>
