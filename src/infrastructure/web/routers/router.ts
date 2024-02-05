@@ -1,4 +1,3 @@
-// import InternshipRouter from './internships/internship.router';
 import AcademicTutorRouter from './academic-tutors/academic-tutors.router';
 import CompanyRouter from './companies/company.router';
 import CompanyTutorRouter from './company-tutors/company-tutors.router';
