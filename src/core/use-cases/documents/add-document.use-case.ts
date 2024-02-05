@@ -1,20 +1,20 @@
-import IUseCase from '@core/interfaces/i-use-case';
-import { IAddDocumentFormData } from '@core/interfaces/request-models/document.request-model';
 import Document from '@core/entities/document.entity';
 import { IDocumentDto } from '@core/interfaces/dtos/document.dto';
-import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
+import IUseCase from '@core/interfaces/i-use-case';
+import { IAddDocumentFormData } from '@core/interfaces/request-models/document.request-model';
 import DocumentMapper from '@core/lib/mappers/document.mapper';
+import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import {
     IDocumentRepository,
     IInternshipRepository
 } from '../interfaces/i-entity-operation';
 
+import { ValueNotFoundError } from '@common/errors';
 import {
     DocumentFile,
     IUploadDocumentsService
 } from '@core/lib/services/i-upload-documents.service';
 import fs from 'fs/promises';
-import { ValueNotFoundError } from '@common/errors';
 
 export default class AddDocumentUseCase
     implements IUseCase<IAddDocumentFormData, IDocumentDto[]>

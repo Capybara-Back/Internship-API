@@ -1,13 +1,12 @@
 import { PutObjectCommand, S3 } from '@aws-sdk/client-s3';
+import logger from '@common/logger';
 import {
     DocumentFile,
     IUploadDocumentsService
 } from '@core/lib/services/i-upload-documents.service';
-import logger from '@common/logger';
 
 export default class S3UploadDocumentsService
-    implements IUploadDocumentsService
-{
+    implements IUploadDocumentsService {
     private readonly s3Client: S3;
     private readonly bucketId: string;
     private readonly bucketUrl: string;
@@ -47,6 +46,7 @@ export default class S3UploadDocumentsService
                     }
                     return { [file.name]: `${this.bucketUrl}/${file.name}` };
                 } catch (e) {
+                    logger.error(e);
                     throw new Error('Unable to use AWS services');
                 }
             })
