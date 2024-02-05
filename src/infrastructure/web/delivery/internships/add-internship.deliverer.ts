@@ -1,12 +1,11 @@
 import AddInternshipController from '@adapters/controllers/internships/add-internship.controller';
-import Deliverer from '../interfaces/deliverer.abstract';
 import { addInternshipValidator } from '@adapters/validators/use-cases/internship';
 import { SuccessResponse } from '@common/contracts';
-import InternshipRepository from '../../../database/orm/repositories/internship.repository';
-import CompanyRepository from '../../../database/orm/repositories/company.repository';
 import AcademicTutorRepository from '../../../database/orm/repositories/academic-tutor.repository';
 import CompanyTutorRepository from '../../../database/orm/repositories/company-tutor.repository';
-import logger from '@common/logger';
+import CompanyRepository from '../../../database/orm/repositories/company.repository';
+import InternshipRepository from '../../../database/orm/repositories/internship.repository';
+import Deliverer from '../interfaces/deliverer.abstract';
 
 export default class AddInternshipDeliverer extends Deliverer {
     public async respond(): Promise<void> {

@@ -35,5 +35,5 @@ export const dataSource = new DataSource({
         Internship,
         Student
     ],
-    synchronize: false
+    synchronize: true
 });
