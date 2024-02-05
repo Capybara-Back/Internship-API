@@ -4,6 +4,8 @@ services:
     image: postgres
     container_name: capybara_db
     restart: always
+    ports:
+      - "5433:5432"
     environment:
       POSTGRES_USER: capybara
       POSTGRES_PASSWORD: capybara
@@ -17,7 +19,7 @@ services:
     container_name: capybara_server
     restart: always
     ports:
-      - "9000:9000"
+      - "9999:9000"
     environment:
       PORT: 9000
       DB_HOST: db
@@ -27,7 +29,7 @@ services:
       DB_PORT: 5432
       AWS_ACCESS_KEY_ID: AKIATWPTWBO6YGJTUUGY
       AWS_SECRET_ACCESS_KEY: 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
-      AWS_DEFAULT_REGION: eu-west-3
+      AWS_S3_REGION: eu-west-3
       AWS_S3_BUCKET_NAME: internshipapi-storage
     depends_on:
       - db

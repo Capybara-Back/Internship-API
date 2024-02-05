@@ -6,10 +6,10 @@ import {
     PrimaryGeneratedColumn
 } from 'typeorm';
 import AcademicTutor from './AcademicTutor';
-import Student from './Student';
-import CompanyTutor from './CompanyTutor';
 import Company from './Company';
+import CompanyTutor from './CompanyTutor';
 import Document from './Document';
+import Student from './Student';
 
 enum InternshipStatus {
     PENDING = 'pending',
@@ -33,6 +33,9 @@ export default class Internship {
 
     @Column('date')
     endDate: Date;
+
+    @Column('numeric')
+    salary: number;
 
     @Column({
         type: 'enum',

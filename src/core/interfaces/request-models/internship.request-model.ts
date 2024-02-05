@@ -7,6 +7,7 @@ export interface IAddInternshipRequestModel {
     missionDescription: string;
     startDate: Date;
     endDate: Date;
+    salary: number;
     studentId: string;
     companyId?: string;
     company?: IAddCompanyRequestModel;

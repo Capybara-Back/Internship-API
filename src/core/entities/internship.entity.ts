@@ -9,6 +9,7 @@ interface IInternshipProps {
     endDate: Date;
     title: string;
     status?: string;
+    salary: number;
     missionDescription: string;
     company?: Company;
     companyTutor?: CompanyTutor;

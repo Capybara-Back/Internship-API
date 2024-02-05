@@ -1,7 +1,11 @@
-import IUseCase from '@core/interfaces/i-use-case';
-import { IAddInternshipRequestModel } from '@core/interfaces/request-models/internship.request-model';
+import { ValueNotFoundError } from '@common/errors';
+import AcademicTutor from '@core/entities/academic-tutor.entity';
+import CompanyTutor from '@core/entities/company-tutor.entity';
+import Company from '@core/entities/company.entity';
 import Internship from '@core/entities/internship.entity';
 import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
+import IUseCase from '@core/interfaces/i-use-case';
+import { IAddInternshipRequestModel } from '@core/interfaces/request-models/internship.request-model';
 import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
 import {
@@ -10,10 +14,6 @@ import {
     ICompanyTutorRepository,
     IInternshipRepository
 } from '../interfaces/i-entity-operation';
-import AcademicTutor from '@core/entities/academic-tutor.entity';
-import CompanyTutor from '@core/entities/company-tutor.entity';
-import Company from '@core/entities/company.entity';
-import { ValueNotFoundError } from '@common/errors';
 
 export default class AddInternshipUseCase
     implements IUseCase<IAddInternshipRequestModel, IInternshipDto>
@@ -141,13 +141,14 @@ export default class AddInternshipUseCase
     transformRequestModelIntoEntity(
         requestModel: IAddInternshipRequestModel
     ): Internship {
-        const { studentId, startDate, endDate, title, missionDescription } =
+        const { studentId, startDate, endDate, salary, title, missionDescription } =
             requestModel;
 
         const internship = new Internship({
             studentId,
             startDate,
             endDate,
+            salary,
             title,
             missionDescription
         });

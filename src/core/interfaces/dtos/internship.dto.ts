@@ -9,6 +9,7 @@ export interface IInternshipDto {
     missionDescription: string;
     status: string;
     startDate: Date;
+    salary: number;
     endDate: Date;
     academicTutor: IAcademicTutorDto;
     companyTutor: ICompanyTutorDto;

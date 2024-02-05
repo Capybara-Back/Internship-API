@@ -1,20 +1,19 @@
-import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
-import DatabaseRepository from '../repository.abstract';
+import logger from '@common/logger';
 import Internship from '@core/entities/internship.entity';
-import InternshipDbEntity from '../typeorm/entities/Internship';
-import { Repository } from 'typeorm';
 import IEntityMapper from '@core/lib/mappers/interfaces/i-entity-mapper';
 import InternshipMapper from '@core/lib/mappers/internship.mapper';
-import logger from '@common/logger';
+import { IInternshipRepository } from '@core/use-cases/interfaces/i-entity-operation';
+import { Repository } from 'typeorm';
+import DatabaseRepository from '../repository.abstract';
 import AcademicTutor from '../typeorm/entities/AcademicTutor';
-import Student from '../typeorm/entities/Student';
-import CompanyTutor from '../typeorm/entities/CompanyTutor';
 import Company from '../typeorm/entities/Company';
+import CompanyTutor from '../typeorm/entities/CompanyTutor';
+import InternshipDbEntity from '../typeorm/entities/Internship';
+import Student from '../typeorm/entities/Student';
 
 export default class InternshipRepository
     extends DatabaseRepository
-    implements IInternshipRepository
-{
+    implements IInternshipRepository {
     private repository!: Repository<InternshipDbEntity>;
     private _dataMapper: Pick<IEntityMapper<Internship, any>, 'toDomain'>;
 
@@ -25,30 +24,36 @@ export default class InternshipRepository
     }
 
     async save(entity: Internship): Promise<Internship> {
-        const entityProps = entity.getProps();
+        try {
+            const entityProps = entity.getProps();
 
-        if (
-            entityProps.academicTutor?.id === undefined ||
-            entityProps.companyTutor?.id === undefined ||
-            entityProps.company?.getProps().name === undefined
-        ) {
-            throw new Error(
-                'Internship must have academic tutor, company tutor and company ids'
-            );
+            if (
+                entityProps.academicTutor?.id === undefined ||
+                entityProps.companyTutor?.id === undefined ||
+                entityProps.company?.getProps().name === undefined
+            ) {
+                throw new Error(
+                    'Internship must have academic tutor, company tutor and company ids'
+                );
+            }
+
+            const entityToPersist = await this.repository.create({
+                missionDescription: entityProps.missionDescription,
+                title: entityProps.title,
+                startDate: entityProps.startDate,
+                endDate: entityProps.endDate,
+                salary: 1200.30,
+                student: new Student(entityProps.studentId),
+                academicTutor: new AcademicTutor(entityProps.academicTutor.id),
+                companyTutor: new CompanyTutor(entityProps.companyTutor.id),
+                company: new Company(entityProps.company?.getProps().name)
+            });
+            const savedEntity = await this.repository.save(entityToPersist);
+            return this._dataMapper.toDomain(savedEntity);
+        } catch (error: any) {
+            logger.error(error?.message || error);
+            throw new Error('Internship saving was unsuccessfull');
         }
-
-        const entityToPersist = await this.repository.create({
-            missionDescription: entityProps.missionDescription,
-            title: entityProps.title,
-            startDate: entityProps.startDate,
-            endDate: entityProps.endDate,
-            student: new Student(entityProps.studentId),
-            academicTutor: new AcademicTutor(entityProps.academicTutor.id),
-            companyTutor: new CompanyTutor(entityProps.companyTutor.id),
-            company: new Company(entityProps.company?.getProps().name)
-        });
-        const savedEntity = await this.repository.save(entityToPersist);
-        return this._dataMapper.toDomain(savedEntity);
     }
 
     async update(entity: Internship, id: string): Promise<Internship | null> {
@@ -81,9 +86,7 @@ export default class InternshipRepository
                 .leftJoinAndSelect('internship.student', 'studentId')
                 .leftJoinAndSelect('internship.company', 'company')
                 .leftJoinAndSelect('internship.companyTutor', 'companyTutor')
-                .leftJoinAndSelect('companyTutor.user', 'companyTutorUser')
                 .leftJoinAndSelect('internship.academicTutor', 'academicTutor')
-                .leftJoinAndSelect('academicTutor.user', 'academicTutorUser')
                 .getMany()
         ).map((entity) => this._dataMapper.toDomain(entity));
     }

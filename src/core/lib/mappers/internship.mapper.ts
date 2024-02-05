@@ -1,14 +1,13 @@
-import Internship from '@core/entities/internship.entity';
-import IEntityMapper from './interfaces/i-entity-mapper';
-import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 import AcademicTutor from '@core/entities/academic-tutor.entity';
-import Company from '@core/entities/company.entity';
 import CompanyTutor from '@core/entities/company-tutor.entity';
+import Company from '@core/entities/company.entity';
+import Internship from '@core/entities/internship.entity';
+import { IInternshipDto } from '@core/interfaces/dtos/internship.dto';
 import AcademicTutorMapper from './academic-tutor.mapper';
 import CompanyTutorMapper from './company-tutor.mapper';
 import CompanyMapper from './company.mapper';
-import logger from '@common/logger';
 import EntityMapper from './entity.mapper';
+import IEntityMapper from './interfaces/i-entity-mapper';
 
 export default class InternshipMapper extends EntityMapper<
     Internship,
@@ -32,14 +31,13 @@ export default class InternshipMapper extends EntityMapper<
     }
 
     public toDomain(raw: { [key: string]: any }): Internship {
-        delete raw?.academicTutor?.user?.password;
-        delete raw?.companyTutor?.user?.password;
         const internship = new Internship(
             {
                 studentId: raw.studentId,
                 title: raw.title,
                 startDate: raw.startDate,
                 endDate: raw.endDate,
+                salary: raw.salary,
                 status: raw.status,
                 missionDescription: raw.missionDescription
             },

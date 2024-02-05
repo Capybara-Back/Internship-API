@@ -25,6 +25,7 @@ const schema = z
         startDate: z.string().datetime(),
         endDate: z.string().datetime(),
         companyId: z.string().optional(),
+        salary: z.number(),
         company: CompanySchema,
         studentId: z.string().uuid(),
         academicTutorId: z.string().uuid().optional(),
@@ -47,7 +48,15 @@ const schema = z
         const hasCompanyTutorId = Boolean(schema.companyTutorId);
         const hasCompanyTutor = Boolean(schema.companyTutor);
 
-        if ((hasCompanyId && hasCompany) || (!hasCompanyId && !hasCompany)) {
+        if ((!hasCompanyId && !hasCompany)) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message:
+                    "You have to give 'company' or 'companyId' in your body request!"
+            });
+        }
+
+        if ((hasCompanyId && hasCompany)) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message:
@@ -55,9 +64,17 @@ const schema = z
             });
         }
 
+        if ((!hasAcademicTutorId && !hasAcademicTutor)) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message:
+                    "You have to give 'academicTutor' or 'academicTutorId' in your body request!"
+            });
+        }
+
         if (
-            (hasAcademicTutorId && hasAcademicTutor) ||
-            (!hasAcademicTutorId && !hasAcademicTutor)
+            (hasAcademicTutorId && hasAcademicTutor)
+
         ) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
@@ -66,9 +83,17 @@ const schema = z
             });
         }
 
+        if ((!hasCompanyTutorId && !hasCompanyTutor)) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message:
+                    "You have to give 'companyTutor' or 'companyTutorId' in your body request!"
+            });
+        }
+
         if (
-            (hasCompanyTutorId && hasCompanyTutor) ||
-            (!hasCompanyTutorId && !hasCompanyTutor)
+            (hasCompanyTutorId && hasCompanyTutor)
+
         ) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
