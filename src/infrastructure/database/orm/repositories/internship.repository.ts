@@ -42,7 +42,7 @@ export default class InternshipRepository
                 title: entityProps.title,
                 startDate: entityProps.startDate,
                 endDate: entityProps.endDate,
-                salary: 1200.30,
+                salary: entityProps.salary,
                 student: new Student(entityProps.studentId),
                 academicTutor: new AcademicTutor(entityProps.academicTutor.id),
                 companyTutor: new CompanyTutor(entityProps.companyTutor.id),
