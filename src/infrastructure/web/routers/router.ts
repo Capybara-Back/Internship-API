@@ -1,5 +1,6 @@
 // import InternshipRouter from './internships/internship.router';
 import AcademicTutorRouter from './academic-tutors/academic-tutors.router';
+import CompanyRouter from './companies/company.router';
 import CompanyTutorRouter from './company-tutors/company-tutors.router';
 import DocumentRouter from './documents/document.router';
 import InternshipRouter from './internships/internship.router';
@@ -22,5 +23,6 @@ export default class MainRouter extends RouterHandler {
             '/academic-tutors',
             new AcademicTutorRouter().getRouter()
         );
+        this._router.use('/companies', new CompanyRouter().getRouter());
     }
 }
